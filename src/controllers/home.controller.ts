@@ -69,7 +69,7 @@ class HomeController {
 			],
 			"userInterfaces": {
 				"configModal": {
-					"url": "public/index.html",
+					"url": "index.html",
 					"height": 200,
 					"width": 300,
 					"fullscreen": true
