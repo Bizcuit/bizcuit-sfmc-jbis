@@ -2,12 +2,11 @@ import * as express from 'express'
 import { Request, Response } from 'express'
 
 class HomeController {
-	public path = '/'
+	public path = '/config.json'
 	public router = express.Router()
 
 	constructor() {
-		this.router.all('/config.json', this.config);
-		this.router.get('/', this.home)
+		this.router.all('*', this.config);
 	}
 
 	public home(req: Request, res: Response) {
@@ -15,7 +14,7 @@ class HomeController {
 	}
 
 	public config(req: Request, res: Response) {
-		let host: string = req.headers.host || 'localhost';
+		const host: string = req.headers.host || 'localhost';
 
 		res.json({
 			"workflowApiVersion": "1.1",
