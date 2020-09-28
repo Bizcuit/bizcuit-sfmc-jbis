@@ -66,11 +66,17 @@ export default {
 		init: function (activity) {
 			this.activity = activity;
 			this.getArgumentValuesFromActivity(activity);
-			console.log("INIT", activity);
+			console.log("INIT", this.activity);
 		},
 
 		saveAndClose: function () {
 			console.log(this.activity);
+
+			if (this?.activity?.metaData === undefined) {
+				return;
+			}
+
+			this.activity.metaData.isConfigured = true;
 			this.connection.trigger("updateActivity", this.activity);
 			this.connection.trigger("requestInspectorClose");
 		},
