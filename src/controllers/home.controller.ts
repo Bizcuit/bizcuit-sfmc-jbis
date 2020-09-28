@@ -32,12 +32,13 @@ class HomeController {
 			"arguments": {
 				"execute": {
 					"inArguments": [
-						{
-							"emailAddress": "{{InteractionDefaults.Email}}"
-						},
-						{
-							"phoneNumber": "{{Contact.Default.PhoneNumber}}"
-						}
+						{ "emailAddress": "{{InteractionDefaults.Email}}" },
+						{ "contactKey": "{{Contact.Key}}" },
+						{ "is_account": "" },
+						{ "is_dataset": "" },
+						{ "is_token": "" },
+						{ "is_userid_field": "SubscriberKey" },
+						{ "is_field_mapping": "" }
 					],
 					"outArguments": [
 						{
@@ -62,10 +63,8 @@ class HomeController {
 				}
 			},
 			"wizardSteps": [
-				{ "label": "Step 1", "key": "step1" },
-				{ "label": "Step 2", "key": "step2" },
-				{ "label": "Step 3", "key": "step3" },
-				{ "label": "Step 4", "key": "step4", "active": false }
+				{ "label": "IS Setup", "key": "setup" },
+				{ "label": "Data Mapping", "key": "map" }
 			],
 			"userInterfaces": {
 				"configModal": {
@@ -79,20 +78,13 @@ class HomeController {
 				"arguments": {
 					"execute": {
 						"inArguments": [
-							{
-								"phoneNumber": {
-									"dataType": "Phone",
-									"isNullable": false,
-									"direction": "in"
-								}
-							},
-							{
-								"emailAddress": {
-									"dataType": "Email",
-									"isNullable": false,
-									"direction": "in"
-								}
-							}
+							{ "contactKey": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							{ "emailAddress": { "dataType": "Email", "isNullable": false, "direction": "in" } },
+							{ "is_account": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							{ "is_dataset": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							{ "is_token": { "dataType": "Text", "isNullable": true, "direction": "in" } },
+							{ "is_userid_field": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							{ "is_field_mapping": { "dataType": "Text", "isNullable": false, "direction": "in" } }
 						],
 						"outArguments": [
 							{
