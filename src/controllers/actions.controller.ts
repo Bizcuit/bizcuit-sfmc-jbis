@@ -5,7 +5,7 @@ import Utils from '../classes/utils'
 class ActionsController {
 	public path = '/actions'
 	public router = express.Router()
-	public static requestCounter: number = 0;
+	public requestCounter: number = 0;
 
 	constructor() {
 		this.router.all('/save', this.save)
@@ -40,9 +40,8 @@ class ActionsController {
 	}
 
 	public execute(req: Request, res: Response) {
-		Utils.log('COUNTER', ActionsController.requestCounter++);
-		Utils.log('EXECUTE', req.body);
-		;
+		Utils.log('COUNTER_NONSTATIC', this.requestCounter++)
+		Utils.log('EXECUTE', req.body)
 
 		/*
 		EXECUTE {
