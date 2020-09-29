@@ -5,6 +5,7 @@ import Utils from '../classes/utils'
 class ActionsController {
 	public path = '/actions'
 	public router = express.Router()
+	public static requestCounter: number = 0;
 
 	constructor() {
 		this.router.all('/save', this.save)
@@ -39,7 +40,32 @@ class ActionsController {
 	}
 
 	public execute(req: Request, res: Response) {
+		Utils.log('COUNTER', ActionsController.requestCounter++);
 		Utils.log('EXECUTE', req.body);
+		;
+
+		/*
+		EXECUTE {
+		inArguments: [
+		{ emailAddress: 'sepp@samsung.com' },
+		{ contactKey: 'SFMC_TK_101' },
+		{ is_account: 'interactionstudion' },
+		{ is_dataset: 'sagadzhanov_sandbox' },
+		{ is_token: 'NOTOKENREQUIRED' },
+		{ is_userid_field: 'SubscriberKey' },
+		{ is_field_mapping: '{"foo": "bar"}' }
+		],
+		outArguments: [ { foundSignupDate: '' } ],
+		activityObjectID: '5d1bda71-665d-4705-aa1f-5568f3b84292',
+		journeyId: 'c1dd0de8-ce2c-4201-9862-a5d55a946f9b',
+		activityId: '5d1bda71-665d-4705-aa1f-5568f3b84292',
+		definitionInstanceId: '867cd348-3956-4c12-8a15-46cca939fe7d',
+		activityInstanceId: '3fad9a0e-305b-4dfe-b49f-0d1e5ff46efd',
+		keyValue: 'SFMC_TK_101',
+		mode: 0
+		}
+		*/
+
 
 		res.json({ result: "success" })
 	}
