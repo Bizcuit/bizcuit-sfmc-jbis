@@ -1,5 +1,7 @@
 <template>
 	<div id="app">
+		<
+
 		<h5>is_account</h5>
 		<input
 			type="text"
@@ -58,6 +60,10 @@ export default {
 				is_token: "",
 				is_userid_field: "",
 				is_field_mapping: "",
+			},
+
+			ui: {
+				currentTab: "",
 			},
 		};
 	},
