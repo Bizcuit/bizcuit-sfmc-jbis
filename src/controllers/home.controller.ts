@@ -73,7 +73,7 @@ class HomeController {
 			"wizardSteps": [
 				{ "label": "MC Setup", "key": "mc_setup" },
 				{ "label": "IS Setup", "key": "is_setup" },
-				{ "label": "Data Mapping", "key": "map" }
+				{ "label": "Data Mapping", "key": "mapping" }
 			],
 			"userInterfaces": {
 				"configModal": {

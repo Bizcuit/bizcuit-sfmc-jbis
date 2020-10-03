@@ -1,50 +1,102 @@
 <template>
 	<div id="app">
-		<
+		<div v-if="ui.currentTab == 'mc_setup'">
+			<div class="columns">
+				<div class="column">
+					<field
+						label="Auth Base URI"
+						type="text"
+						placeholder="EG: https://abcde-fghij-klmnop.auth.marketingcloudapis.com/"
+						:value.sync="config.mc_authurl"
+					/>
+				</div>
 
-		<h5>is_account</h5>
-		<input
-			type="text"
-			:value="config.is_account"
-			@change="sendArgumentValue('is_account', $event.target.value)"
-		/>
+				<div class="column">
+					<field
+						label="MID"
+						type="text"
+						placeholder="EG: 123456"
+						:value.sync="config.mc_mid"
+					/>
+				</div>
+			</div>
 
-		<h5>is_dataset</h5>
-		<input
-			type="text"
-			:value="config.is_dataset"
-			@change="sendArgumentValue('is_dataset', $event.target.value)"
-		/>
+			<div class="columns">
+				<div class="column">
+					<field
+						label="Client ID"
+						type="text"
+						placeholder="EG: abcdefghijklmnop"
+						:value.sync="config.mc_client_id"
+					/>
+				</div>
 
-		<h5>is_token</h5>
-		<input
-			type="text"
-			:value="config.is_token"
-			@change="sendArgumentValue('is_token', $event.target.value)"
-		/>
+				<div class="column">
+					<field
+						label="Client Secret"
+						type="text"
+						placeholder="EG: abcdefghijklmnop"
+						:value.sync="config.mc_client_secret"
+					/>
+				</div>
+			</div>
+		</div>
 
-		<h5>is_userid_field</h5>
-		<input
-			type="text"
-			:value="config.is_userid_field"
-			@change="sendArgumentValue('is_userid_field', $event.target.value)"
-		/>
+		<div v-else-if="ui.currentTab == 'is_setup'">
+			<div class="columns">
+				<div class="column">
+					<field
+						label="Account"
+						type="text"
+						placeholder="EG: abcdef"
+						:value.sync="config.is_account"
+					/>
+				</div>
+				<div class="column">
+					<field
+						label="Dataset"
+						type="text"
+						placeholder="EG: abcdef"
+						:value.sync="config.is_dataset"
+					/>
+				</div>
+			</div>
 
-		<h5>is_field_mapping</h5>
-		<input
-			type="text"
-			:value="config.is_field_mapping"
-			@change="sendArgumentValue('is_field_mapping', $event.target.value)"
-		/>
+			<div class="columns">
+				<div class="column">
+					<field
+						label="UserID field"
+						type="select"
+						placeholder="EG: abcdef"
+						:value.sync="config.is_userid_field"
+						:options="['SubscriberKey', 'Email']"
+					/>
+				</div>
+				<div class="column">
+					<field
+						label="IS Token (optional)"
+						type="text"
+						placeholder="EG: abcdef"
+						:value.sync="config.is_token"
+					/>
+				</div>
+			</div>
+		</div>
 
-		<button @click="saveAndClose()">Save</button>
+		<div v-else-if="ui.currentTab == 'mapping'">
+			<textarea v-model="is_field_mapping" />
+		</div>
+
+		<button class="button is-primary is-small" @click="saveAndClose()">
+			Save and close
+		</button>
 	</div>
 </template>
 
 <script>
 import Postmonger from "postmonger";
 
-//import Config from "./components/Config.vue";
+import Field from "./components/Field.vue";
 
 export default {
 	name: "App",
@@ -60,10 +112,23 @@ export default {
 				is_token: "",
 				is_userid_field: "",
 				is_field_mapping: "",
+				is_action: "",
+				is_custom_payload: "",
+
+				mc_dataextension: "",
+				mc_authurl: "",
+				mc_mid: "",
+				mc_client_id: "",
+				mc_client_secret: "",
 			},
 
 			ui: {
-				currentTab: "",
+				currentTab: "is_setup",
+				tabs: {
+					mc_setup: { next: "is_setup" },
+					is_setup: { next: "mapping", prev: "mc_setup" },
+					mapping: { prev: "is_setup" },
+				},
 			},
 		};
 	},
@@ -71,23 +136,25 @@ export default {
 	methods: {
 		init: function (activity) {
 			this.activity = activity;
-			this.getArgumentValuesFromActivity(activity);
+			this.getArgumentValues(activity);
 			console.log("INIT", this.activity);
 		},
 
 		saveAndClose: function () {
-			console.log(this.activity);
-
 			if (this?.activity?.metaData === undefined) {
 				return;
 			}
+
+			this.setArgumentValues();
+
+			console.log(this.activity);
 
 			this.activity.metaData.isConfigured = true;
 			this.connection.trigger("updateActivity", this.activity);
 			this.connection.trigger("requestInspectorClose");
 		},
 
-		getArgumentValuesFromActivity: function (activity) {
+		getArgumentValues: function (activity) {
 			if (activity?.arguments?.execute?.inArguments === undefined) {
 				return;
 			}
@@ -101,16 +168,15 @@ export default {
 			}
 		},
 
-		sendArgumentValue: function (argument, value) {
+		setArgumentValues: function () {
 			if (this?.activity?.arguments?.execute?.inArguments === undefined) {
 				return;
 			}
 
 			for (let a of this?.activity?.arguments?.execute?.inArguments) {
 				for (let prop in a) {
-					if (prop === argument) {
-						a[prop] = value;
-						return;
+					if (this.config[prop]) {
+						a[prop] = this.config[prop];
 					}
 				}
 			}
@@ -131,6 +197,19 @@ export default {
 		this.connection.trigger("ready");
 		this.connection.trigger("requestTokens");
 		this.connection.trigger("requestEndpoints");
+
+		this.connection.on("clickedNext", () => {
+			this.ui.currentTab = this.ui.tabs[this.ui.currentTab].next || "mapping";
+		});
+
+		this.connection.on("clickedBack", () => {
+			this.ui.currentTab = this.ui.tabs[this.ui.currentTab].prev || "mc_setup";
+		});
+
+		this.connection.on("gotoStep", (e) => {
+			console.log(e);
+		});
+
 		/*
 		connection.on('initActivity', onInitActivity);
 		connection.trigger('ready');
@@ -158,12 +237,15 @@ export default {
 	},
 
 	components: {
-		//Config,
+		Field,
 	},
 };
 </script>
 
 <style>
+#app {
+	padding: 10px;
+}
 h5 {
 	padding: 10px 0px 5px 0px;
 	margin: 0px;
