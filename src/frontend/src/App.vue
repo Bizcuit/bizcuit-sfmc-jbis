@@ -123,7 +123,7 @@ export default {
 			},
 
 			ui: {
-				currentTab: "is_setup",
+				currentTab: "mc_setup",
 				tabs: {
 					mc_setup: { next: "is_setup" },
 					is_setup: { next: "mapping", prev: "mc_setup" },
@@ -200,14 +200,17 @@ export default {
 
 		this.connection.on("clickedNext", () => {
 			this.ui.currentTab = this.ui.tabs[this.ui.currentTab].next || "mapping";
+			this.connection.trigger("ready");
 		});
 
 		this.connection.on("clickedBack", () => {
 			this.ui.currentTab = this.ui.tabs[this.ui.currentTab].prev || "mc_setup";
+			this.connection.trigger("ready");
 		});
 
 		this.connection.on("gotoStep", (e) => {
 			console.log(e);
+			this.connection.trigger("ready");
 		});
 
 		/*
