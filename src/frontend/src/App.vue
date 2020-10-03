@@ -87,9 +87,11 @@
 			<textarea v-model="is_field_mapping" />
 		</div>
 
-		<button class="button is-primary is-small" @click="saveAndClose()">
-			Save and close
-		</button>
+		<div class="mt-1">
+			<button class="button is-primary is-small" @click="saveAndClose()">
+				Save and close
+			</button>
+		</div>
 	</div>
 </template>
 
