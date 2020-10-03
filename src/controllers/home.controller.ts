@@ -79,8 +79,8 @@ class HomeController {
 				"configModal": {
 					"url": "index.html",
 					"height": 200,
-					"width": 300,
-					"fullscreen": true
+					"width": 400,
+					"fullscreen": false
 				}
 			},
 			"schema": {
