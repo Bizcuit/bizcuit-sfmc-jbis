@@ -1,7 +1,7 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 
-class HomeController {
+class ConfigController {
 	public path = '/config.json'
 	public router = express.Router()
 
@@ -46,7 +46,8 @@ class HomeController {
 						{ "mc_authurl": "" },
 						{ "mc_mid": "" },
 						{ "mc_client_id": "" },
-						{ "mc_client_secret": "" }
+						{ "mc_client_secret": "" },
+						{ "mc_multirow": false }
 					],
 					"outArguments": [
 						{
@@ -78,7 +79,7 @@ class HomeController {
 			"userInterfaces": {
 				"configModal": {
 					"url": "index.html",
-					"height": 200,
+					"height": 300,
 					"width": 800,
 					"fullscreen": false
 				}
@@ -99,6 +100,7 @@ class HomeController {
 							{ "is_custom_payload": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 
 							{ "mc_dataextension": { "dataType": "Text", "isNullable": true, "direction": "in" } },
+							{ "mc_multirow": { "dataType": "Boolean", "isNullable": true, "direction": "in" } },
 							{ "mc_authurl": { "dataType": "Text", "isNullable": false, "direction": "in" } },
 							{ "mc_mid": { "dataType": "Text", "isNullable": false, "direction": "in" } },
 							{ "mc_client_id": { "dataType": "Text", "isNullable": false, "direction": "in" } },
@@ -120,4 +122,4 @@ class HomeController {
 	}
 }
 
-export default HomeController
+export default ConfigController

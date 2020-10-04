@@ -1,13 +1,13 @@
 import App from './app'
 import * as bodyParser from 'body-parser'
 
-import HomeController from './controllers/home.controller'
+import ConfigController from './controllers/config.controller'
 import ActionsController from './controllers/actions.controller'
 
 const app = new App({
 	port: process.env.PORT || 8080,
 	controllers: [
-		new HomeController(),
+		new ConfigController(),
 		new ActionsController()
 	],
 	middleWares: [

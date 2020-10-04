@@ -1,6 +1,6 @@
 <template>
 	<div class="field">
-		<label class="label is-small">{{ label }}</label>
+		<label v-if="label" class="label is-small">{{ label }}</label>
 		<div class="control">
 			<div class="select is-small is-fullwidth" v-if="type == 'select'">
 				<select @change="$emit('update:value', $event.target.value)">

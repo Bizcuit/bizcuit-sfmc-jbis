@@ -1,5 +1,19 @@
 <template>
 	<div id="app">
+		<nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+			<ul>
+				<li :class="ui.currentTab == 'mc_setup' ? 'is-active' : ''">
+					<a @click="ui.currentTab = 'mc_setup'">MC Setup</a>
+				</li>
+				<li :class="ui.currentTab == 'is_setup' ? 'is-active' : ''">
+					<a @click="ui.currentTab = 'is_setup'">IS Setup</a>
+				</li>
+				<li :class="ui.currentTab == 'mapping' ? 'is-active' : ''">
+					<a @click="ui.currentTab = 'mapping'">Mapping</a>
+				</li>
+			</ul>
+		</nav>
+
 		<div v-if="ui.currentTab == 'mc_setup'">
 			<div class="columns">
 				<div class="column">
@@ -74,7 +88,7 @@
 				</div>
 				<div class="column">
 					<field
-						label="IS Token (optional)"
+						label="IS Auth Token (optional)"
 						type="text"
 						placeholder="EG: abcdef"
 						:value.sync="config.is_token"
@@ -84,16 +98,85 @@
 		</div>
 
 		<div v-else-if="ui.currentTab == 'mapping'">
-			<textarea v-model="config.is_field_mapping" />
+			<div class="columns">
+				<div class="column">
+					<field
+						label="IS Action"
+						type="text"
+						placeholder="EG: JB_Campaign"
+						:value.sync="config.is_action"
+					/>
+				</div>
+
+				<div class="column">
+					<field
+						label="MC Dataextension Key"
+						type="text"
+						placeholder="EG: My_IS_Dataextension"
+						:value.sync="config.mc_dataextension"
+					/>
+				</div>
+			</div>
+
+			<div class="columns">
+				<div class="column is-half">
+					<div class="field has-addons">
+						<div class="control is-expanded">
+							<input
+								class="input is-small"
+								type="text"
+								placeholder="Test IS UserID"
+								v-model="testUserId"
+							/>
+						</div>
+						<div class="control">
+							<a class="button is-primary is-small">Get campaign response</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="column is-one-fifth">
+					<button class="button is-small is-primary is-fullwidth">
+						Add column
+					</button>
+				</div>
+				<div class="column">
+					<div class="field">
+						<div class="control">
+							<div class="buttons has-addons is-fullwidth">
+								<span class="button is-small is-static is-expanded"
+									>Multiple records</span
+								>
+
+								<button
+									:class="[
+										config.mc_multirow ? 'is-selected  is-primary' : '',
+										'button is-small',
+									]"
+									@click="config.mc_multirow = true"
+								>
+									yes
+								</button>
+								<button
+									:class="[
+										!config.mc_multirow ? 'is-selected  is-primary' : '',
+										'button is-small',
+									]"
+									@click="config.mc_multirow = false"
+								>
+									no
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<div class="mt-1">
+		<div class="mt-5">
 			<button class="button is-primary is-small" @click="saveAndClose()">
 				Save and close
 			</button>
-
-			<button @click="toggleCurrentTab(1)">next</button>
-			<button @click="toggleCurrentTab(-1)">prev</button>
 		</div>
 	</div>
 </template>
@@ -111,6 +194,8 @@ export default {
 			connection: null,
 			activity: null,
 
+			testUserId: "",
+
 			config: {
 				is_account: "",
 				is_dataset: "",
@@ -125,6 +210,7 @@ export default {
 				mc_mid: "",
 				mc_client_id: "",
 				mc_client_secret: "",
+				mc_multirow: false,
 			},
 
 			ui: {
