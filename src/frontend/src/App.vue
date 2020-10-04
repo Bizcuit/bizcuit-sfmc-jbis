@@ -84,13 +84,16 @@
 		</div>
 
 		<div v-else-if="ui.currentTab == 'mapping'">
-			<textarea v-model="is_field_mapping" />
+			<textarea v-model="config.is_field_mapping" />
 		</div>
 
 		<div class="mt-1">
 			<button class="button is-primary is-small" @click="saveAndClose()">
 				Save and close
 			</button>
+
+			<button @click="toggleCurrentTab(1)">next</button>
+			<button @click="toggleCurrentTab(-1)">prev</button>
 		</div>
 	</div>
 </template>
@@ -187,6 +190,7 @@ export default {
 		},
 
 		toggleCurrentTab: function (offset) {
+			console.log(this.ui.steps);
 			this.ui.steps[this.ui.currentTabIndex].active = false;
 
 			this.ui.currentTabIndex = Math.min(
@@ -196,6 +200,8 @@ export default {
 
 			this.ui.steps[this.ui.currentTabIndex].active = true;
 			this.ui.currentTab = this.ui.steps[this.ui.currentTabIndex].key;
+
+			console.log(this.ui.steps);
 
 			this.connection.trigger("updateSteps", this.ui.steps);
 			this.connection.trigger("ready");

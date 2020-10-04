@@ -28,7 +28,7 @@ export default {
 		placeholder: String,
 		value: String,
 		type: String,
-		options: [String],
+		options: Array,
 	},
 };
 </script>
