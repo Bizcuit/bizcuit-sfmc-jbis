@@ -126,11 +126,13 @@ export default {
 
 			ui: {
 				currentTab: "mc_setup",
-				tabs: {
-					mc_setup: { next: "is_setup" },
-					is_setup: { next: "mapping", prev: "mc_setup" },
-					mapping: { prev: "is_setup" },
-				},
+				currentTabIndex: 0,
+
+				steps: [
+					{ label: "MC Setup", key: "mc_setup", active: true },
+					{ label: "IS Setup", key: "is_setup", active: false },
+					{ label: "Data Mapping", key: "mapping", active: false },
+				],
 			},
 		};
 	},
@@ -184,6 +186,21 @@ export default {
 			}
 		},
 
+		toggleCurrentTab: function (offset) {
+			this.steps[this.currentTabIndex].active = false;
+
+			this.currentTabIndex = Math.min(
+				this.steps.length - 1,
+				Math.abs(this.currentTabIndex + offset)
+			);
+
+			this.steps[this.currentTabIndex].active = true;
+			this.currentTab = this.steps[this.currentTabIndex].key;
+
+			this.connection.trigger("updateSteps", this.steps);
+			this.connection.trigger("ready");
+		},
+
 		log: function (data) {
 			console.log("LOG", data);
 		},
@@ -201,13 +218,11 @@ export default {
 		this.connection.trigger("requestEndpoints");
 
 		this.connection.on("clickedNext", () => {
-			this.ui.currentTab = this.ui.tabs[this.ui.currentTab].next || "mapping";
-			this.connection.trigger("ready");
+			this.toggleCurrentTab(1);
 		});
 
 		this.connection.on("clickedBack", () => {
-			this.ui.currentTab = this.ui.tabs[this.ui.currentTab].prev || "mc_setup";
-			this.connection.trigger("ready");
+			this.toggleCurrentTab(-1);
 		});
 
 		this.connection.on("gotoStep", (e) => {
