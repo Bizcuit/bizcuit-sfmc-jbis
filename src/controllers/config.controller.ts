@@ -72,9 +72,9 @@ class ConfigController {
 				}
 			},
 			"wizardSteps": [
-				{ "label": "MC Setup", "key": "mc_setup" },
-				{ "label": "IS Setup", "key": "is_setup" },
-				{ "label": "Data Mapping", "key": "mapping" }
+				//	{ "label": "MC Setup", "key": "mc_setup" },
+				//	{ "label": "IS Setup", "key": "is_setup" },
+				//	{ "label": "Data Mapping", "key": "mapping" }
 			],
 			"userInterfaces": {
 				"configModal": {
