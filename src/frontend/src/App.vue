@@ -187,17 +187,17 @@ export default {
 		},
 
 		toggleCurrentTab: function (offset) {
-			this.steps[this.currentTabIndex].active = false;
+			this.ui.steps[this.ui.currentTabIndex].active = false;
 
-			this.currentTabIndex = Math.min(
-				this.steps.length - 1,
-				Math.abs(this.currentTabIndex + offset)
+			this.ui.currentTabIndex = Math.min(
+				this.ui.steps.length - 1,
+				Math.abs(this.ui.currentTabIndex + offset)
 			);
 
-			this.steps[this.currentTabIndex].active = true;
-			this.currentTab = this.steps[this.currentTabIndex].key;
+			this.ui.steps[this.ui.currentTabIndex].active = true;
+			this.ui.currentTab = this.ui.steps[this.ui.currentTabIndex].key;
 
-			this.connection.trigger("updateSteps", this.steps);
+			this.connection.trigger("updateSteps", this.ui.steps);
 			this.connection.trigger("ready");
 		},
 
