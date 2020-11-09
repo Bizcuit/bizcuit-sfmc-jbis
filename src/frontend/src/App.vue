@@ -218,8 +218,8 @@ export default {
 				currentTabIndex: 0,
 
 				steps: [
-					{ label: "MC Setup", key: "mc_setup", active: true },
 					{ label: "IS Setup", key: "is_setup", active: false },
+					{ label: "MC Setup", key: "mc_setup", active: true },
 					{ label: "Data Mapping", key: "mapping", active: false },
 				],
 			},
@@ -277,7 +277,7 @@ export default {
 
 		toggleCurrentTab: function (offset) {
 			console.log(this.ui.steps);
-			this.ui.steps[this.ui.currentTabIndex].active = false;
+			//this.ui.steps[this.ui.currentTabIndex].active = false;
 
 			this.ui.currentTabIndex = Math.min(
 				this.ui.steps.length - 1,
@@ -289,7 +289,7 @@ export default {
 
 			console.log(this.ui.steps);
 
-			this.connection.trigger("updateSteps", this.ui.steps);
+			//this.connection.trigger("updateSteps", this.ui.steps);
 			this.connection.trigger("ready");
 		},
 
@@ -311,10 +311,12 @@ export default {
 
 		this.connection.on("clickedNext", () => {
 			this.toggleCurrentTab(1);
+			this.connection.trigger("nextStep");
 		});
 
 		this.connection.on("clickedBack", () => {
 			this.toggleCurrentTab(-1);
+			this.connection.trigger("prevStep");
 		});
 
 		this.connection.on("gotoStep", (e) => {
