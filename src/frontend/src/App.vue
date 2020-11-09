@@ -322,6 +322,10 @@ export default {
 			this.connection.trigger("ready");
 		});
 
+		window.addEventListener('message', function(event) {
+			console.log('Message received: ', event);
+		});
+
 		/*
 		connection.on('initActivity', onInitActivity);
 		connection.trigger('ready');
