@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+		<!--nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
 			<ul>
 				<li :class="ui.currentTab == 'mc_setup' ? 'is-active' : ''">
 					<a @click="ui.currentTab = 'mc_setup'">MC Setup</a>
@@ -12,7 +12,7 @@
 					<a @click="ui.currentTab = 'mapping'">Mapping</a>
 				</li>
 			</ul>
-		</nav>
+		</nav-->
 
 		<div v-if="ui.currentTab == 'mc_setup'">
 			<div class="columns">
@@ -276,21 +276,18 @@ export default {
 		},
 
 		toggleCurrentTab: function (offset) {
-			console.log(this.ui.steps);
-			//this.ui.steps[this.ui.currentTabIndex].active = false;
+			this.ui.currentTabIndex += offset;
+			
+			if(this.ui.currentTabIndex < 0) {
+				this.ui.currentTabIndex = 0;
+			}
 
-			this.ui.currentTabIndex = Math.min(
-				this.ui.steps.length - 1,
-				Math.abs(this.ui.currentTabIndex + offset)
-			);
+			if(this.ui.currentTabIndex >= this.ui.steps.length){
+				this.saveAndClose();
+				return;
+			}
 
-			this.ui.steps[this.ui.currentTabIndex].active = true;
 			this.ui.currentTab = this.ui.steps[this.ui.currentTabIndex].key;
-
-			console.log(this.ui.steps);
-
-			//this.connection.trigger("updateSteps", this.ui.steps);
-			this.connection.trigger("ready");
 		},
 
 		log: function (data) {
