@@ -201,9 +201,10 @@ export default {
 				is_dataset: "",
 				is_token: "",
 				is_userid_field: "",
-				is_field_mapping: "",
 				is_action: "",
 				is_custom_payload: "",
+				
+				is_field_mapping: "",
 
 				mc_dataextension: "",
 				mc_authurl: "",
@@ -214,7 +215,7 @@ export default {
 			},
 
 			ui: {
-				currentTab: "mc_setup",
+				currentTab: "is_setup",
 				currentTabIndex: 0,
 
 				steps: [
