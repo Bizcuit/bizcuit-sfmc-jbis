@@ -271,7 +271,7 @@ export default {
 
 			for (let a of this?.activity?.arguments?.execute?.inArguments) {
 				for (let prop in a) {
-					if (this.config[prop]) {
+					if (this.config[prop] !== undefined) {
 						a[prop] = this.config[prop];
 					}
 				}
