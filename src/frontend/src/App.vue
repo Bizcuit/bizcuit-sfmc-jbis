@@ -1,18 +1,10 @@
 <template>
 	<div id="app">
-		<!--nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-			<ul>
-				<li :class="ui.currentTab == 'mc_setup' ? 'is-active' : ''">
-					<a @click="ui.currentTab = 'mc_setup'">MC Setup</a>
-				</li>
-				<li :class="ui.currentTab == 'is_setup' ? 'is-active' : ''">
-					<a @click="ui.currentTab = 'is_setup'">IS Setup</a>
-				</li>
-				<li :class="ui.currentTab == 'mapping' ? 'is-active' : ''">
-					<a @click="ui.currentTab = 'mapping'">Mapping</a>
-				</li>
-			</ul>
-		</nav-->
+		<div class="mt-5">
+			<button class="button is-primary is-small" @click="saveAndClose()">
+				Save and close
+			</button>
+		</div>
 
 		<div v-if="ui.currentTab == 'mc_setup'">
 			<div class="columns">
@@ -171,12 +163,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="mt-5">
-			<button class="button is-primary is-small" @click="saveAndClose()">
-				Save and close
-			</button>
 		</div>
 	</div>
 </template>
