@@ -3,7 +3,7 @@
 		<label v-if="label" class="label is-small">{{ label }}</label>
 		<div class="control">
 			<div class="select is-small is-fullwidth" v-if="type == 'select'">
-				<select @change="$emit('update:value', $event.target.value)">
+				<select @change="$emit('update:value', $event.target.value)" v-model="selected">
 					<option v-for="o in options" :key="o" :value="o">{{ o }}</option>
 				</select>
 			</div>
@@ -30,6 +30,14 @@ export default {
 		type: String,
 		options: Array,
 	},
+	data: () => {
+		return {
+			selected: ""
+		}
+	},
+	created: () => {
+		this.selected = this.value;
+	}
 };
 </script>
 
