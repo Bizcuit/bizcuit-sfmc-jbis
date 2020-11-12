@@ -243,7 +243,7 @@ export default {
 
 			this.setArgumentValues();
 
-			console.log(this.activity);
+			console.log(JSON.stringify(this.activity));
 
 			this.activity.metaData.isConfigured = true;
 			this.connection.trigger("updateActivity", this.activity);
