@@ -1,9 +1,11 @@
 <template>
 	<div id="app">
-		<div class="mt-5">
-			<button class="button is-primary is-small" @click="saveAndClose()">
-				Save and close
-			</button>
+		<div class="mb-5">
+			<div class="buttons is-right">
+				<button class="button is-primary is-small" @click="saveAndClose()">
+					Save and close
+				</button>
+			</div>
 		</div>
 
 		<div v-if="ui.currentTab == 'mc_setup'">
@@ -66,6 +68,7 @@
 						:value.sync="config.is_dataset"
 					/>
 				</div>
+
 			</div>
 
 			<div class="columns">
@@ -85,6 +88,19 @@
 						placeholder="EG: abcdef"
 						:value.sync="config.is_token"
 					/>
+				</div>
+			</div>
+
+			<div class="columns">
+				<div class="column">
+					<field
+						label="IS Action"
+						type="text"
+						placeholder="EG: JB_Campaign"
+						:value.sync="config.is_action"
+					/>
+				</div>
+				<div class="column">
 				</div>
 			</div>
 		</div>

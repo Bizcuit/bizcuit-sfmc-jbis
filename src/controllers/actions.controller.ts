@@ -1,6 +1,8 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 import Utils from '../classes/utils'
+import InteractionStudio from '../classes/interactionstudio'
+import InteractionStudioConfig from '../classes/interactionstudioconfig'
 
 class ActionsController {
 	public path = '/actions'
@@ -42,6 +44,10 @@ class ActionsController {
 	public execute(req: Request, res: Response) {
 		Utils.log('COUNTER_NONSTATIC', this.requestCounter++)
 		Utils.log('EXECUTE', req.body)
+		const isConfig = InteractionStudioConfig.getFromRequest(req.body);
+		const is = new InteractionStudio(isConfig);
+
+		is.executeApi(is.getDefaultPayload());
 
 		/*
 		EXECUTE {

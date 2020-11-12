@@ -94,7 +94,6 @@ class ConfigController {
 							{ "is_dataset": { "dataType": "Text", "isNullable": false, "direction": "in" } },
 							{ "is_token": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 							{ "is_userid_field": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "is_userid_field": { "dataType": "Text", "isNullable": false, "direction": "in" } },
 							{ "is_field_mapping": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 							{ "is_action": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 							{ "is_custom_payload": { "dataType": "Text", "isNullable": true, "direction": "in" } },
