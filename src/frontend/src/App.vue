@@ -203,7 +203,7 @@ export default {
 				is_userid_field: "",
 				is_action: "",
 				is_custom_payload: "",
-				
+
 				is_field_mapping: "",
 
 				mc_dataextension: "",
@@ -318,8 +318,8 @@ export default {
 		});
 
 		this.connection.on("gotoStep", (e) => {
-			console.log(e);
-			this.connection.trigger("ready");
+			this.ui.currentTab = e.key;
+			this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
 		});
 
 		window.addEventListener('message', function(event) {
