@@ -30,13 +30,21 @@ export default {
 		type: String,
 		options: Array,
 	},
+	
 	data: () => {
 		return {
 			selected: ""
 		}
 	},
+
 	created: () => {
 		this.selected = this.value;
+	},
+
+	watch: {
+		value: (newVal) => {
+			this.selected = newVal;
+		}
 	}
 };
 </script>
