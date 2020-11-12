@@ -7,7 +7,6 @@ import InteractionStudioConfig from '../classes/interactionstudioconfig'
 class ActionsController {
 	public path = '/actions'
 	public router = express.Router()
-	public requestCounter: number = 0;
 
 	constructor() {
 		this.router.all('/save', this.save)
@@ -42,7 +41,6 @@ class ActionsController {
 	}
 
 	public execute(req: Request, res: Response) {
-		Utils.log('COUNTER_NONSTATIC', this.requestCounter++)
 		Utils.log('EXECUTE', req.body)
 		const isConfig = InteractionStudioConfig.getFromRequest(req.body);
 		const is = new InteractionStudio(isConfig);
