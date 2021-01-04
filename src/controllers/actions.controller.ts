@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import Utils from '../classes/utils'
 import InteractionStudio from '../classes/interactionstudio'
 import InteractionStudioConfig from '../classes/interactionstudioconfig'
+import InteractionStudioResponse from '../classes/interactionstudioresponse'
 
 class ActionsController {
 	public path = '/actions'
@@ -40,13 +41,13 @@ class ActionsController {
 		res.json({ result: "success" })
 	}
 
-	public execute(req: Request, res: Response) {
+	public async execute(req: Request, res: Response) {
 		Utils.log('EXECUTE', req.body)
 		const isConfig = InteractionStudioConfig.getFromRequest(req.body);
 		const is = new InteractionStudio(isConfig);
-
-		is.executeApi(is.getDefaultPayload());
-
+		
+		const axiosApiResponse = await is.executeApi(is.getDefaultPayload());
+		const isResponse = new InteractionStudioResponse(axiosApiResponse);
 		/*
 		EXECUTE {
 		inArguments: [
@@ -69,8 +70,8 @@ class ActionsController {
 		}
 		*/
 
-
-		res.json({ result: "success" })
+		Utils.log('EXECUTE RESP', isResponse);
+		res.status(200).json(isResponse)
 	}
 }
 

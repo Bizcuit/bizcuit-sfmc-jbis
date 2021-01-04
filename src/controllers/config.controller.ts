@@ -32,26 +32,33 @@ class ConfigController {
 			"arguments": {
 				"execute": {
 					"inArguments": [
-						{ "emailAddress": "{{InteractionDefaults.Email}}" },
 						{ "contactKey": "{{Contact.Key}}" },
+						{ "emailAddress": "{{InteractionDefaults.Email}}" },
 
 						{ "is_account": "" },
 						{ "is_dataset": "" },
 						{ "is_token": "" },
 						{ "is_userid_field": "" },
-						{ "is_field_mapping": "" },
-						{ "is_action": "" },
 						{ "is_custom_payload": "" },
-						{ "mc_dataextension": "" },
-						{ "mc_authurl": "" },
-						{ "mc_mid": "" },
-						{ "mc_client_id": "" },
-						{ "mc_client_secret": "" },
-						{ "mc_multirow": false }
+						{ "is_action": "" },
+
+						// { "is_field_mapping": "" },
+						// { "mc_dataextension": "" },
+						// { "mc_authurl": "" },
+						// { "mc_mid": "" },
+						// { "mc_client_id": "" },
+						// { "mc_client_secret": "" },
+						// { "mc_multirow": false }
 					],
 					"outArguments": [
 						{
-							"foundSignupDate": ""
+							"segments": "",
+							"recommendation_1": "",
+							"recommendation_2": "",
+							"recommendation_3": "",
+							"attribute_1": "",
+							"attribute_2": "",
+							"attribute_3": ""
 						}
 					],
 					"url": `https://${host}/actions/execute`
@@ -73,8 +80,8 @@ class ConfigController {
 			},
 			"wizardSteps": [
 				{ "label": "IS Setup", "key": "is_setup" },
-				{ "label": "MC Setup", "key": "mc_setup" },
-				{ "label": "Data Mapping", "key": "mapping" }
+				// { "label": "MC Setup", "key": "mc_setup" },
+				// { "label": "Data Mapping", "key": "mapping" }
 			],
 			"userInterfaces": {
 				"configModal": {
@@ -94,21 +101,50 @@ class ConfigController {
 							{ "is_dataset": { "dataType": "Text", "isNullable": false, "direction": "in" } },
 							{ "is_token": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 							{ "is_userid_field": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "is_field_mapping": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							{ "is_action": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 							{ "is_custom_payload": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-
-							{ "mc_dataextension": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							{ "mc_multirow": { "dataType": "Boolean", "isNullable": true, "direction": "in" } },
-							{ "mc_authurl": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "mc_mid": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "mc_client_id": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "mc_client_secret": { "dataType": "Text", "isNullable": false, "direction": "in" } }
+							{ "is_action": { "dataType": "Text", "isNullable": true, "direction": "in" } },
+							//{ "is_field_mapping": { "dataType": "Text", "isNullable": true, "direction": "in" } },
+							//{ "mc_dataextension": { "dataType": "Text", "isNullable": true, "direction": "in" } },
+							//{ "mc_multirow": { "dataType": "Boolean", "isNullable": true, "direction": "in" } },
+							//{ "mc_authurl": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							//{ "mc_mid": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							//{ "mc_client_id": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							//{ "mc_client_secret": { "dataType": "Text", "isNullable": false, "direction": "in" } }
 						],
 						"outArguments": [
 							{
-								"foundSignupDate": {
-									"dataType": "Date",
+								"segments": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"recommendation_1": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"recommendation_2": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"recommendation_3": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"attribute_1": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"attribute_2": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"attribute_3": {
+									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
 								}
