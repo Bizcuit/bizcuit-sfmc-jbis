@@ -53,12 +53,12 @@ class ConfigController {
 					"outArguments": [
 						{
 							"segments": "",
-							"recommendation_1": "",
-							"recommendation_2": "",
-							"recommendation_3": "",
-							"attribute_1": "",
-							"attribute_2": "",
-							"attribute_3": ""
+							"recommendation1": "",
+							"recommendation2": "",
+							"recommendation3": "",
+							"attribute1": "",
+							"attribute2": "",
+							"attribute3": ""
 						}
 					],
 					"url": `https://${host}/actions/execute`
@@ -103,13 +103,13 @@ class ConfigController {
 							{ "is_userid_field": { "dataType": "Text", "isNullable": false, "direction": "in" } },
 							{ "is_custom_payload": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 							{ "is_action": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							//{ "is_field_mapping": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							//{ "mc_dataextension": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							//{ "mc_multirow": { "dataType": "Boolean", "isNullable": true, "direction": "in" } },
-							//{ "mc_authurl": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							//{ "mc_mid": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							//{ "mc_client_id": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							//{ "mc_client_secret": { "dataType": "Text", "isNullable": false, "direction": "in" } }
+							// { "is_field_mapping": { "dataType": "Text", "isNullable": true, "direction": "in" } },
+							// { "mc_dataextension": { "dataType": "Text", "isNullable": true, "direction": "in" } },
+							// { "mc_multirow": { "dataType": "Boolean", "isNullable": true, "direction": "in" } },
+							// { "mc_authurl": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							// { "mc_mid": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							// { "mc_client_id": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+							// { "mc_client_secret": { "dataType": "Text", "isNullable": false, "direction": "in" } }
 						],
 						"outArguments": [
 							{
@@ -118,32 +118,32 @@ class ConfigController {
 									"direction": "out",
 									"access": "visible"
 								},
-								"recommendation_1": {
+								"recommendation1": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
 								},
-								"recommendation_2": {
+								"recommendation2": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
 								},
-								"recommendation_3": {
+								"recommendation3": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
 								},
-								"attribute_1": {
+								"attribute1": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
 								},
-								"attribute_2": {
+								"attribute2": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
 								},
-								"attribute_3": {
+								"attribute3": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"

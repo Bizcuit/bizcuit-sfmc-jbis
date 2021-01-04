@@ -45,7 +45,7 @@ class ActionsController {
 		Utils.log('EXECUTE', req.body)
 		const isConfig = InteractionStudioConfig.getFromRequest(req.body);
 		const is = new InteractionStudio(isConfig);
-		
+
 		const axiosApiResponse = await is.executeApi(is.getDefaultPayload());
 		const isResponse = new InteractionStudioResponse(axiosApiResponse);
 		/*
