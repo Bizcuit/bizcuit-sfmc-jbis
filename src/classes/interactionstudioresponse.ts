@@ -11,6 +11,6 @@ export default class InteractionStudioResponse {
 
 	constructor(apiResponse: any) {
 		this.segments = Math.floor(Math.random() * 10).toString();
-		Utils.log("AxiosRequestConfig", apiResponse);
+		Utils.log("AxiosRequestConfig", apiResponse.data);
 	}
 }
