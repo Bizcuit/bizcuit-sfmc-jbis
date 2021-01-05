@@ -1,3 +1,5 @@
+import Utils from "./utils";
+
 export default class InteractionStudioResponse {
 	segments: string = "";
 
@@ -9,6 +11,6 @@ export default class InteractionStudioResponse {
 
 	constructor(apiResponse: any) {
 		this.segments = Math.floor(Math.random() * 10).toString();
-		this.attribute1 = JSON.stringify(apiResponse);
+		Utils.log("AxiosRequestConfig", apiResponse);
 	}
 }
