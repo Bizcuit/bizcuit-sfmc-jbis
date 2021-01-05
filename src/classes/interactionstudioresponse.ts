@@ -1,9 +1,7 @@
 export default class InteractionStudioResponse {
 	segments: string = "";
 
-	recommendation1: string = "";
-	recommendation2: string = "";
-	recommendation3: string = "";
+	recommendation: string = "";
 
 	attribute1: string = "";
 	attribute2: string = "";
@@ -11,5 +9,6 @@ export default class InteractionStudioResponse {
 
 	constructor(apiResponse: any) {
 		this.segments = Math.floor(Math.random() * 10).toString();
+		this.attribute1 = JSON.stringify(apiResponse);
 	}
 }

@@ -53,9 +53,7 @@ class ConfigController {
 					"outArguments": [
 						{
 							"segments": "",
-							"recommendation1": "",
-							"recommendation2": "",
-							"recommendation3": "",
+							"recommendation": "",
 							"attribute1": "",
 							"attribute2": "",
 							"attribute3": ""
@@ -118,17 +116,7 @@ class ConfigController {
 									"direction": "out",
 									"access": "visible"
 								},
-								"recommendation1": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"recommendation2": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"recommendation3": {
+								"recommendation": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
