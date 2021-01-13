@@ -26,7 +26,7 @@ class ConfigController {
 			"lang": {
 				"en-US": {
 					"name": "JBIS",
-					"description": "Gets campaigns from Interaction Studion"
+					"description": "Trigger a campaign in Interaction Studio"
 				}
 			},
 			"arguments": {
@@ -41,22 +41,13 @@ class ConfigController {
 						{ "is_userid_field": "" },
 						{ "is_custom_payload": "" },
 						{ "is_action": "" },
-
-						// { "is_field_mapping": "" },
-						// { "mc_dataextension": "" },
-						// { "mc_authurl": "" },
-						// { "mc_mid": "" },
-						// { "mc_client_id": "" },
-						// { "mc_client_secret": "" },
-						// { "mc_multirow": false }
+						{ "is_campaign": "" }
 					],
 					"outArguments": [
 						{
 							"segments": "",
 							"recommendation": "",
-							"attribute1": "",
-							"attribute2": "",
-							"attribute3": ""
+							"attribute": ""
 						}
 					],
 					"url": `https://${host}/actions/execute`
@@ -77,9 +68,7 @@ class ConfigController {
 				}
 			},
 			"wizardSteps": [
-				{ "label": "IS Setup", "key": "is_setup" },
-				// { "label": "MC Setup", "key": "mc_setup" },
-				// { "label": "Data Mapping", "key": "mapping" }
+				{ "label": "IS Setup", "key": "is_setup" }
 			],
 			"userInterfaces": {
 				"configModal": {
@@ -101,13 +90,7 @@ class ConfigController {
 							{ "is_userid_field": { "dataType": "Text", "isNullable": false, "direction": "in" } },
 							{ "is_custom_payload": { "dataType": "Text", "isNullable": true, "direction": "in" } },
 							{ "is_action": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							// { "is_field_mapping": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							// { "mc_dataextension": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							// { "mc_multirow": { "dataType": "Boolean", "isNullable": true, "direction": "in" } },
-							// { "mc_authurl": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							// { "mc_mid": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							// { "mc_client_id": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							// { "mc_client_secret": { "dataType": "Text", "isNullable": false, "direction": "in" } }
+							{ "is_campaign": { "dataType": "Text", "isNullable": true, "direction": "in" } }
 						],
 						"outArguments": [
 							{
@@ -121,17 +104,7 @@ class ConfigController {
 									"direction": "out",
 									"access": "visible"
 								},
-								"attribute1": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"attribute2": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"attribute3": {
+								"attribute": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"

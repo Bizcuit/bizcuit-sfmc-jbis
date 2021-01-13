@@ -59,6 +59,12 @@
 					/>
 				</div>
 				<div class="column">
+					<field
+						label="IS Campaign Name"
+						type="text"
+						placeholder="EG: JBIS_CAMPAIGN"
+						:value.sync="config.is_campaign"
+					/>
 				</div>
 			</div>
 		</div>
@@ -204,15 +210,8 @@ export default {
 				is_token: "",
 				is_userid_field: "",
 				is_action: "",
+				is_campaign: "",
 				is_custom_payload: "",
-
-				// is_field_mapping: "",
-				// mc_dataextension: "",
-				// mc_authurl: "",
-				// mc_mid: "",
-				// mc_client_id: "",
-				// mc_client_secret: "",
-				// mc_multirow: false,
 			},
 
 			ui: {
@@ -220,9 +219,7 @@ export default {
 				currentTabIndex: 0,
 
 				steps: [
-					{ label: "IS Setup", key: "is_setup", active: false },
-					// { label: "MC Setup", key: "mc_setup", active: true },
-					// { label: "Data Mapping", key: "mapping", active: false },
+					{ label: "IS Setup", key: "is_setup", active: false }
 				],
 			},
 		};

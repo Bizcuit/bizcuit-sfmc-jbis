@@ -6,6 +6,7 @@ export default class InteractionStudioConfig {
 	public userField: string = "SubscriberKey"
 	public contactKey: string = ""
 	public emailAddress: string = ""
+	public campaign: string = ""
 
 	public static getFromRequest(request: any): InteractionStudioConfig {
 		const result = new InteractionStudioConfig();
@@ -19,8 +20,7 @@ export default class InteractionStudioConfig {
 				if (p === 'is_token') result.token = a[p];
 				if (p === 'is_userid_field') result.userField = a[p];
 				if (p === 'is_action') result.action = a[p];
-				// if(p == 'is_field_mapping') result.account = a[p];
-				// if(p == 'is_custom_payload') result.account = a[p];
+				if (p === 'is_campaign') result.campaign = a[p];
 			}
 		});
 

@@ -43,11 +43,15 @@ class ActionsController {
 
 	public async execute(req: Request, res: Response) {
 		Utils.log('EXECUTE', req.body)
-		const isConfig = InteractionStudioConfig.getFromRequest(req.body);
-		const is = new InteractionStudio(isConfig);
-
+		
+		const is = new InteractionStudio(InteractionStudioConfig.getFromRequest(req.body));
 		const axiosApiResponse = await is.executeApi(is.getDefaultPayload());
 		const isResponse = new InteractionStudioResponse(axiosApiResponse);
+
+		Utils.log('EXECUTE RESP', isResponse);
+
+		return res.status(200).json(isResponse)
+
 		/*
 		EXECUTE {
 		inArguments: [
@@ -69,9 +73,6 @@ class ActionsController {
 		mode: 0
 		}
 		*/
-
-		Utils.log('EXECUTE RESP', isResponse);
-		res.status(200).json(isResponse)
 	}
 }
 

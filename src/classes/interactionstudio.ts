@@ -9,7 +9,7 @@ export default class InteractionStudio {
 		this.config = config
 	}
 
-	public get getUserId(): string {
+	public get userId(): string {
 		return this.config.userField === 'SubscriberKey' ? this.config.contactKey : this.config.emailAddress;
 	}
 
@@ -36,7 +36,7 @@ export default class InteractionStudio {
 				"channel": "Server"
 			},
 			"user": {
-				"id": this.getUserId
+				"id": this.userId
 			}
 		};
 	}
