@@ -1,12 +1,12 @@
 <template>
 	<div id="app">
-		<div class="mb-5">
+		<!--div class="mb-5">
 			<div class="buttons is-right">
 				<button class="button is-primary is-small" @click="saveAndClose()">
 					Save and close
 				</button>
 			</div>
-		</div>
+		</div-->
 
 		<div v-if="ui.currentTab == 'is_setup'">
 			<div class="columns">
