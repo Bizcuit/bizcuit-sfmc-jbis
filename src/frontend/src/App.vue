@@ -67,10 +67,10 @@
 
 		<div class="tags mt-3">
 			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.segments}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.recommendations}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.experience}}'"></span>
 			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.userGroup}}'"></span>
 			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.attribute}}'"></span>
+			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.recommendations}}'"></span>
+			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.experience}}'"></span>
 		</div>
 
 	</div>
