@@ -44,13 +44,11 @@ class ConfigController {
 						{ "is_campaign": "" }
 					],
 					"outArguments": [
-						{
-							"segments": "",
-							"recommendations": "",
-							"attribute": "",
-							"experience": "",
-							"userGroup": ""
-						}
+						{ "segments": "" },
+						{ "recommendations": "" },
+						{ "attribute": "" },
+						{ "experience": "" },
+						{ "userGroup": "" }
 					],
 					"url": `https://${host}/actions/execute`
 				}
