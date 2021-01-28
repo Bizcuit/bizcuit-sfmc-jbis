@@ -61,7 +61,7 @@
 			</div>
 		</div>
 
-		<h3 class="is-size-6 mt-5"><strong>Substitution Strings:</strong></h3>
+		<h3 class="is-size-6 mt-5"><strong>Output substitution strings:</strong></h3>
 
 		<div class="tags mt-3">
 			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.segments}}'"></span>
@@ -123,11 +123,7 @@ export default {
 			}
 
 			this.setArgumentValues();
-
-			console.log(JSON.stringify(this.activity));
-
 			this.activity.metaData.isConfigured = true;
-			this.activity.key = 'JBIS';
 			this.connection.trigger("updateActivity", this.activity);
 			this.connection.trigger("requestInspectorClose");
 		},
