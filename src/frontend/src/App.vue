@@ -1,5 +1,7 @@
 <template>
 	<div id="app">
+		<h3 class="is-size-6 mt-5"><strong>Configuration:</strong></h3>
+
 		<div v-if="ui.currentTab == 'is_setup'">
 			<div class="columns">
 				<div class="column">
