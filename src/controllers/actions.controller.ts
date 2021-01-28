@@ -18,22 +18,22 @@ class ActionsController {
 	}
 
 	public save(req: Request, res: Response) {
-		Utils.log('SAVE', req.body)
+		//Utils.log('SAVE', req.body)
 		res.json({ result: "success" })
 	}
 
 	public publish(req: Request, res: Response) {
-		Utils.log('PUBLISH', req.body)
+		//Utils.log('PUBLISH', req.body)
 		res.json({ result: "success" })
 	}
 
 	public validate(req: Request, res: Response) {
-		Utils.log('VALIDATE', req.body)
+		//Utils.log('VALIDATE', req.body)
 		res.json({ result: "success" })
 	}
 
 	public stop(req: Request, res: Response) {
-		Utils.log('STOP', req.body)
+		//Utils.log('STOP', req.body)
 		res.json({ result: "success" })
 	}
 
@@ -43,6 +43,8 @@ class ActionsController {
 		const isConfig = InteractionStudioConfig.getFromRequest(req.body)
 		const is = new InteractionStudio(isConfig)
 		const isResponse = await is.executeApi(is.getDefaultPayload())
+		
+		Utils.log('RESPONSE', isResponse)
 
 		return res.status(200).json(isResponse)
 	}
