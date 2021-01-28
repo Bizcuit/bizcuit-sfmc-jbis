@@ -20,7 +20,7 @@ class ConfigController {
 			"workflowApiVersion": "1.1",
 			"metaData": {
 				"icon": "icon.png",
-				"category": "message"
+				"category": "customer"
 			},
 			"type": "REST",
 			"lang": {

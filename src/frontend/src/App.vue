@@ -1,13 +1,5 @@
 <template>
 	<div id="app">
-		<!--div class="mb-5">
-			<div class="buttons is-right">
-				<button class="button is-primary is-small" @click="saveAndClose()">
-					Save and close
-				</button>
-			</div>
-		</div-->
-
 		<div v-if="ui.currentTab == 'is_setup'">
 			<div class="columns">
 				<div class="column">
@@ -69,123 +61,16 @@
 			</div>
 		</div>
 
-		<!--div v-else-if="ui.currentTab == 'mc_setup'">
-			<div class="columns">
-				<div class="column">
-					<field
-						label="Auth Base URI"
-						type="text"
-						placeholder="EG: https://abcde-fghij-klmnop.auth.marketingcloudapis.com/"
-						:value.sync="config.mc_authurl"
-					/>
-				</div>
+		<h3 class="is-size-6 mt-5"><strong>Substitution Strings:</strong></h3>
 
-				<div class="column">
-					<field
-						label="MID"
-						type="text"
-						placeholder="EG: 123456"
-						:value.sync="config.mc_mid"
-					/>
-				</div>
-			</div>
-
-			<div class="columns">
-				<div class="column">
-					<field
-						label="Client ID"
-						type="text"
-						placeholder="EG: abcdefghijklmnop"
-						:value.sync="config.mc_client_id"
-					/>
-				</div>
-
-				<div class="column">
-					<field
-						label="Client Secret"
-						type="text"
-						placeholder="EG: abcdefghijklmnop"
-						:value.sync="config.mc_client_secret"
-					/>
-				</div>
-			</div>
+		<div class="tags mt-3">
+			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.segments}}'"></span>
+			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.recommendations}}'"></span>
+			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.experience}}'"></span>
+			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.userGroup}}'"></span>
+			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.attribute}}'"></span>
 		</div>
 
-		<div v-else-if="ui.currentTab == 'mapping'">
-			<div class="columns">
-				<div class="column">
-					<field
-						label="IS Action"
-						type="text"
-						placeholder="EG: JB_Campaign"
-						:value.sync="config.is_action"
-					/>
-				</div>
-
-				<div class="column">
-					<field
-						label="MC Dataextension Key"
-						type="text"
-						placeholder="EG: My_IS_Dataextension"
-						:value.sync="config.mc_dataextension"
-					/>
-				</div>
-			</div>
-
-			<div class="columns">
-				<div class="column is-half">
-					<div class="field has-addons">
-						<div class="control is-expanded">
-							<input
-								class="input is-small"
-								type="text"
-								placeholder="Test IS UserID"
-								v-model="testUserId"
-							/>
-						</div>
-						<div class="control">
-							<a class="button is-primary is-small">Get campaign response</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="column is-one-fifth">
-					<button class="button is-small is-primary is-fullwidth">
-						Add column
-					</button>
-				</div>
-				<div class="column">
-					<div class="field">
-						<div class="control">
-							<div class="buttons has-addons is-fullwidth">
-								<span class="button is-small is-static is-expanded"
-									>Multiple records</span
-								>
-
-								<button
-									:class="[
-										config.mc_multirow ? 'is-selected  is-primary' : '',
-										'button is-small',
-									]"
-									@click="config.mc_multirow = true"
-								>
-									yes
-								</button>
-								<button
-									:class="[
-										!config.mc_multirow ? 'is-selected  is-primary' : '',
-										'button is-small',
-									]"
-									@click="config.mc_multirow = false"
-								>
-									no
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div-->
 	</div>
 </template>
 
@@ -242,6 +127,7 @@ export default {
 			console.log(JSON.stringify(this.activity));
 
 			this.activity.metaData.isConfigured = true;
+			this.activity.key = 'JBIS';
 			this.connection.trigger("updateActivity", this.activity);
 			this.connection.trigger("requestInspectorClose");
 		},
