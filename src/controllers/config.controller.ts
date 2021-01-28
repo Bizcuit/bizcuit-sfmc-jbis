@@ -19,7 +19,7 @@ class ConfigController {
 		res.json({
 			"workflowApiVersion": "1.1",
 			"metaData": {
-				"icon": "images/sms.png",
+				"icon": "icon.png",
 				"category": "message"
 			},
 			"type": "REST",
@@ -46,8 +46,10 @@ class ConfigController {
 					"outArguments": [
 						{
 							"segments": "",
-							"recommendation": "",
-							"attribute": ""
+							"recommendations": "",
+							"attribute": "",
+							"experience": "",
+							"userGroup": ""
 						}
 					],
 					"url": `https://${host}/actions/execute`
@@ -99,7 +101,7 @@ class ConfigController {
 									"direction": "out",
 									"access": "visible"
 								},
-								"recommendation": {
+								"recommendations": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
@@ -108,7 +110,17 @@ class ConfigController {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
-								}
+								},
+								"experience": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"userGroup": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
 							}
 						]
 					}

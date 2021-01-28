@@ -1,32 +1,37 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import Utils from './utils';
+import axios, { AxiosPromise, AxiosRequestConfig } from 'axios'
+import Utils from './utils'
 import InteractionStudioConfig from './interactionstudioconfig'
+import InteractionStudioResponse from './interactionstudioresponse'
 
 export default class InteractionStudio {
-	private config: InteractionStudioConfig;
+	private config: InteractionStudioConfig
 
 	constructor(config: InteractionStudioConfig) {
 		this.config = config
 	}
 
 	public get userId(): string {
-		return this.config.userField === 'SubscriberKey' ? this.config.contactKey : this.config.emailAddress;
+		return this.config.userField === 'SubscriberKey' ? this.config.contactKey : this.config.emailAddress
 	}
 
-	public executeApi(payload: any) {
+	public async executeApi(payload: any): Promise<InteractionStudioResponse> {
 		const request: AxiosRequestConfig = {
 			method: 'POST',
 			url: `https://${this.config.account}.evergage.com/api2/event/${this.config.dataset}`,
+			headers: {
+				"Content-Type": "application/json"
+			},
 			data: payload
-		};
+		}
 
-		if (this.config.token !== '') request.headers = {
-			"Authorization": `Basic ${this.config.token}`
-		};
+		if (this.config.token !== '') {
+			request.headers["Authorization"] = `Basic ${this.config.token}`
+		}
 
-		Utils.log("AxiosRequestConfig", this.config);
+		const response = await axios(request)
+		const isResponse: InteractionStudioResponse = InteractionStudioResponse.getFromResponseBody(response?.data, this.config)
 
-		return axios(request)
+		return isResponse
 	}
 
 	public getDefaultPayload(): any {
@@ -38,6 +43,6 @@ export default class InteractionStudio {
 			"user": {
 				"id": this.userId
 			}
-		};
+		}
 	}
 }
