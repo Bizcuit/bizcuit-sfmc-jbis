@@ -6,7 +6,7 @@
 	"scripts": {
 		"prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
 		"build": "tsc",
-		"prestart": "tsc",
+		"prestart": "cd ./src/frontend && npm run build && cd ../.. && tsc",
 		"start": "node .",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

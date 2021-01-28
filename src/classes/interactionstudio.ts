@@ -28,10 +28,17 @@ export default class InteractionStudio {
 			request.headers["Authorization"] = `Basic ${this.config.token}`
 		}
 
-		const response = await axios(request)
-		const isResponse: InteractionStudioResponse = InteractionStudioResponse.getFromResponseBody(response?.data, this.config)
+		try {
+			const response = await axios(request)
+			const isResponse: InteractionStudioResponse = InteractionStudioResponse.getFromResponseBody(response?.data, this.config)
+			return isResponse
+		}
+		catch (err) {
+			Utils.log("ERROR: IS API call failed", err)
+			Utils.log("REQUEST", request)
+		}
 
-		return isResponse
+		return new InteractionStudioResponse()
 	}
 
 	public getDefaultPayload(): any {
