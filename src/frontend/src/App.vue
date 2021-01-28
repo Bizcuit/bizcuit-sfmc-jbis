@@ -41,7 +41,7 @@
 				</div>
 				<div class="column">
 					<field
-						label="IS Auth Token (optional)"
+						label="IS Authentication Config (optional)"
 						type="text"
 						placeholder="EG: abcdef"
 						:value.sync="config.is_token"

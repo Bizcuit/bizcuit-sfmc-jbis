@@ -1,4 +1,4 @@
 module.exports = {
 	outputDir: "../../public",
-	filenameHashing: true
+	filenameHashing: false
 }
