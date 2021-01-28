@@ -6,9 +6,9 @@
 			<div class="columns">
 				<div class="column">
 					<field
-						label="Account"
+						label="Account and region"
 						type="text"
-						placeholder="EG: abcdef"
+						placeholder="EG: cumulus.germany-2"
 						:value.sync="config.is_account"
 					/>
 				</div>
@@ -16,7 +16,7 @@
 					<field
 						label="Dataset"
 						type="text"
-						placeholder="EG: abcdef"
+						placeholder="EG: engage"
 						:value.sync="config.is_dataset"
 					/>
 				</div>
@@ -48,7 +48,7 @@
 					<field
 						label="IS Action"
 						type="text"
-						placeholder="EG: JB_Campaign"
+						placeholder="EG: JB_ACTION"
 						:value.sync="config.is_action"
 					/>
 				</div>
@@ -56,7 +56,7 @@
 					<field
 						label="IS Campaign Name"
 						type="text"
-						placeholder="EG: JBIS_CAMPAIGN"
+						placeholder="EG: JB_CAMPAIGN"
 						:value.sync="config.is_campaign"
 					/>
 				</div>
