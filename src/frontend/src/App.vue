@@ -60,9 +60,9 @@
 						:value.sync="config.is_campaign"
 					/>
 				</div>
-				<div class="column is-one-quarter has-text-right">
+				<div class="column is-one-quarter">
 					<label class="label is-small">Test configuration</label>
-					<a class="button is-info is-small" @click="sendTestAction()">Send Action</a>
+					<a class="button is-info is-small is-fullwidth" @click="sendTestAction()">Send Action</a>
 				</div>
 			</div>
 		</div>
