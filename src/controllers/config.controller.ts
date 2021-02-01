@@ -49,8 +49,8 @@ class ConfigController {
 						{ "experience": "" },
 						{ "userGroup": "" },
 						{ "attribute": "" },
-						{ "attribute_2": "" },
-						{ "attribute_3": "" }
+						{ "attribute2": "" },
+						{ "attribute3": "" }
 					],
 					"url": `https://${host}/actions/execute`
 				}
@@ -121,12 +121,12 @@ class ConfigController {
 									"direction": "out",
 									"access": "visible"
 								},
-								"attribute_2": {
+								"attribute2": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
 								},
-								"attribute_3": {
+								"attribute3": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"

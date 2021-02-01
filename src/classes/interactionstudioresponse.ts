@@ -7,8 +7,8 @@ export default class InteractionStudioResponse {
 	experience: string = ""
 	userGroup: string = ""
 	attribute: string = ""
-	attribute_2: string = ""
-	attribute_3: string = ""
+	attribute2: string = ""
+	attribute3: string = ""
 
 	public static getFromResponseBody(body: any, config: InteractionStudioConfig) {
 		const isResponse = new InteractionStudioResponse()
@@ -25,8 +25,8 @@ export default class InteractionStudioResponse {
 
 		campaignResponse?.serverSideMessages?.forEach((message: any) => {
 			isResponse.attribute = message?.dataMap?.attribute || isResponse.attribute
-			isResponse.attribute_2 = message?.dataMap?.attribute_2 || isResponse.attribute_2
-			isResponse.attribute_2 = message?.dataMap?.attribute_3 || isResponse.attribute_3
+			isResponse.attribute2 = message?.dataMap?.attribute2 || isResponse.attribute2
+			isResponse.attribute2 = message?.dataMap?.attribute3 || isResponse.attribute3
 
 			isResponse.segments = message?.dataMap?.segments || isResponse.segments
 
