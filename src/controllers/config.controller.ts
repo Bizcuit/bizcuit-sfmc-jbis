@@ -75,7 +75,7 @@ class ConfigController {
 			"userInterfaces": {
 				"configModal": {
 					"url": "index.html",
-					"height": 400,
+					"height": 450,
 					"width": 800,
 					"fullscreen": false
 				}
