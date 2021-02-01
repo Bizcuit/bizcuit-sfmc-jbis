@@ -17,7 +17,7 @@ export default class InteractionStudioResponse {
 		const campaignResponse: any = body?.campaignResponses?.find((c: any) => c.campaignName.toLowerCase().trim() === config.campaign.toLowerCase().trim())
 
 		if (!campaignResponse) {
-			isResponse.status = "ERROR: Body is empty or no matching campaigns found"
+			isResponse.status = "ERROR: Server-Side campaign '" + config.campaign + "' was not found"
 			Utils.log(isResponse.status, body)
 			return isResponse
 		}
