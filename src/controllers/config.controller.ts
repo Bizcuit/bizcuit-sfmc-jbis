@@ -46,9 +46,11 @@ class ConfigController {
 					"outArguments": [
 						{ "segments": "" },
 						{ "recommendations": "" },
-						{ "attribute": "" },
 						{ "experience": "" },
-						{ "userGroup": "" }
+						{ "userGroup": "" },
+						{ "attribute": "" },
+						{ "attribute_2": "" },
+						{ "attribute_3": "" }
 					],
 					"url": `https://${host}/actions/execute`
 				}
@@ -104,11 +106,6 @@ class ConfigController {
 									"direction": "out",
 									"access": "visible"
 								},
-								"attribute": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
 								"experience": {
 									"dataType": "Text",
 									"direction": "out",
@@ -119,6 +116,21 @@ class ConfigController {
 									"direction": "out",
 									"access": "visible"
 								},
+								"attribute": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"attribute_2": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"attribute_3": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								}
 							}
 						]
 					}

@@ -4,9 +4,11 @@ import Utils from "./utils"
 export default class InteractionStudioResponse {
 	segments: string = ""
 	recommendations: string = ""
-	attribute: string = ""
 	experience: string = ""
 	userGroup: string = ""
+	attribute: string = ""
+	attribute_2: string = ""
+	attribute_3: string = ""
 
 	public static getFromResponseBody(body: any, config: InteractionStudioConfig) {
 		const isResponse = new InteractionStudioResponse()
@@ -23,6 +25,9 @@ export default class InteractionStudioResponse {
 
 		campaignResponse?.serverSideMessages?.forEach((message: any) => {
 			isResponse.attribute = message?.dataMap?.attribute || isResponse.attribute
+			isResponse.attribute_2 = message?.dataMap?.attribute_2 || isResponse.attribute_2
+			isResponse.attribute_2 = message?.dataMap?.attribute_3 || isResponse.attribute_3
+
 			isResponse.segments = message?.dataMap?.segments || isResponse.segments
 
 			if (message?.dataMap?.recommendations?.length) {
