@@ -60,6 +60,10 @@
 						:value.sync="config.is_campaign"
 					/>
 				</div>
+				<div class="column is-one-quarter has-text-right">
+					<label class="label is-small">Test configuration</label>
+					<a class="button is-info is-small" @click="sendTestAction()">Send Action</a>
+				</div>
 			</div>
 		</div>
 
@@ -119,6 +123,44 @@ export default {
 			this.activity = activity;
 			this.getArgumentValues(activity);
 			console.log("INIT", this.activity);
+		},
+
+		sendTestAction: function(){
+			fetch('/actions/execute', {
+				method: 'POST',
+				mode: 'cors',
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: { 'Content-Type': 'application/json' },
+				redirect: 'follow',
+				referrerPolicy: 'no-referrer',
+				body: JSON.stringify({
+					inArguments: [
+						{ contactKey: "test_jbis" },
+						{ emailAddress: "test_jbis@test.test" },
+						{ is_account: this.config.is_account },
+						{ is_dataset: this.config.is_dataset },
+						{ is_token: this.config.is_token },
+						{ is_userid_field: this.config.is_userid_field },
+						{ is_action: this.config.is_action },
+						{ is_campaign: this.config.is_campaign }
+					]
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				let message = "Status - " + data.status;
+
+				for(let prop in data){
+					if(prop !== "status" && data[prop]){
+						message += '\n===============\n' + prop + " = " + data[prop];
+					}
+				}
+				alert(message.trim());
+
+			}).catch(err => {
+				alert('ERROR: ' + err.message);
+			});
 		},
 
 		saveAndClose: function () {
@@ -245,6 +287,8 @@ export default {
 <style>
 #app {
 	padding: 10px;
+	margin: 0px auto;
+	max-width: 800px;
 }
 h5 {
 	padding: 10px 0px 5px 0px;

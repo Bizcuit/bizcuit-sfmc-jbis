@@ -9,6 +9,7 @@ export default class InteractionStudioResponse {
 	attribute: string = ""
 	attribute2: string = ""
 	attribute3: string = ""
+	status: string = "OK"
 
 	public static getFromResponseBody(body: any, config: InteractionStudioConfig) {
 		const isResponse = new InteractionStudioResponse()
@@ -16,7 +17,8 @@ export default class InteractionStudioResponse {
 		const campaignResponse: any = body?.campaignResponses?.find((c: any) => c.campaignName.toLowerCase().trim() === config.campaign.toLowerCase().trim())
 
 		if (!campaignResponse) {
-			Utils.log("ERROR: Body is empty or no matching campaign found", body)
+			isResponse.status = "ERROR: Body is empty or no matching campaigns found"
+			Utils.log(isResponse.status, body)
 			return isResponse
 		}
 

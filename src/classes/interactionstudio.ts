@@ -34,8 +34,12 @@ export default class InteractionStudio {
 			return isResponse
 		}
 		catch (err) {
+			const isResponse: InteractionStudioResponse = new InteractionStudioResponse();
+			isResponse.status = "ERROR: IS API call failed with message: " + err.message;
+
 			Utils.log("ERROR: IS API call failed", err)
 			Utils.log("REQUEST", request)
+			return isResponse;
 		}
 
 		return new InteractionStudioResponse()
