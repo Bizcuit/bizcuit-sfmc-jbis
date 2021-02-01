@@ -17,7 +17,7 @@ export default class InteractionStudioResponse {
 		const campaignResponse: any = body?.campaignResponses?.find((c: any) => c.campaignName.toLowerCase().trim() === config.campaign.toLowerCase().trim())
 
 		if (!campaignResponse) {
-			isResponse.status = "ERROR: Server-Side campaign '" + config.campaign + "' was not found"
+			isResponse.status = "WARNING: Server-Side campaign '" + config.campaign + "' was not found. Check if the campaign is published and if the name is correct. Actions will be still captured by IS, but no data will be returned back to MC."
 			Utils.log(isResponse.status, body)
 			return isResponse
 		}
