@@ -124,8 +124,11 @@ export default {
 			this.getArgumentValues(activity);
 			console.log("INIT", this.activity);
 		},
+		
 
 		sendTestAction: function(){
+			let userId = window.prompt('Which UserId (SubscriberKey / EmailAddress) would you like to use for this test? Leave empty for default values', 'test_jbis@test.test');
+
 			fetch('/actions/execute', {
 				method: 'POST',
 				mode: 'cors',
@@ -136,8 +139,8 @@ export default {
 				referrerPolicy: 'no-referrer',
 				body: JSON.stringify({
 					inArguments: [
-						{ contactKey: "test_jbis" },
-						{ emailAddress: "test_jbis@test.test" },
+						{ contactKey: userId || "test_jbis" },
+						{ emailAddress: userId || "test_jbis@test.test" },
 						{ is_account: this.config.is_account },
 						{ is_dataset: this.config.is_dataset },
 						{ is_token: this.config.is_token },
