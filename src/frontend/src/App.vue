@@ -62,7 +62,7 @@
 				</div>
 				<div class="column is-one-quarter">
 					<label class="label is-small">Test configuration</label>
-					<a class="button is-info is-small is-fullwidth" @click="sendTestAction()">Send Action</a>
+					<a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Send Action</a>
 				</div>
 			</div>
 		</div>
@@ -110,6 +110,7 @@ export default {
 			ui: {
 				currentTab: "is_setup",
 				currentTabIndex: 0,
+				isTesting: false,
 
 				steps: [
 					{ label: "IS Setup", key: "is_setup", active: false }
@@ -127,7 +128,8 @@ export default {
 		
 
 		sendTestAction: function(){
-			let userId = window.prompt('Which UserId (SubscriberKey / EmailAddress) would you like to use for this test? Leave empty for default values', 'test_jbis@test.test');
+			this.ui.isTesting = true;
+			let userId = window.prompt('Which UserId (SubscriberKey / EmailAddress) would you like to use for this test? Click "Cancel" to use default values', 'test_jbis@test.test');
 
 			fetch('/actions/execute', {
 				method: 'POST',
@@ -161,8 +163,12 @@ export default {
 				}
 				alert(message.trim());
 
-			}).catch(err => {
+			})
+			.catch(err => {
 				alert('ERROR: ' + err.message);
+			})
+			.finally(() => {
+				this.ui.isTesting = false;
 			});
 		},
 
