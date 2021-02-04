@@ -24,7 +24,7 @@
 			</div>
 
 			<div class="columns">
-				<div class="column">
+				<div class="column is-one-quarter">
 					<field
 						label="UserID field"
 						type="select"
@@ -35,16 +35,16 @@
 				</div>
 				<div class="column">
 					<field
-						label="IS Authentication Config (optional)"
-						type="text"
-						placeholder="EG: abcdef"
+						label="IS Authentication Config"
+						type="password"
+						placeholder="Format - [YOUR_API_Key_ID]:[YOUR_API_Key_Secret]"
 						:value.sync="config.is_token"
 					/>
 				</div>
 			</div>
 
 			<div class="columns">
-				<div class="column">
+				<div class="column is-one-quarter">
 					<field
 						label="IS Action"
 						type="text"

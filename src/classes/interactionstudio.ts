@@ -17,7 +17,7 @@ export default class InteractionStudio {
 	public async executeApi(payload: any): Promise<InteractionStudioResponse> {
 		const request: AxiosRequestConfig = {
 			method: 'POST',
-			url: `https://${this.config.account}.evergage.com/api2/event/${this.config.dataset}`,
+			url: `https://${this.config.account}.evergage.com/api2/${this.config.token !== '' ? 'authevent' : 'event'}/${this.config.dataset}`,
 			headers: {
 				"Content-Type": "application/json"
 			},
@@ -25,7 +25,8 @@ export default class InteractionStudio {
 		}
 
 		if (this.config.token !== '') {
-			request.headers["Authorization"] = `Basic ${this.config.token}`
+			const buffer = Buffer.from(this.config.token, "utf8");
+			request.headers["Authorization"] = `Basic ${buffer.toString("base64")}`
 		}
 
 		try {
@@ -37,8 +38,8 @@ export default class InteractionStudio {
 			const isResponse: InteractionStudioResponse = new InteractionStudioResponse();
 			isResponse.status = "ERROR: IS API call failed with message: " + err.message;
 
-			Utils.log("ERROR: IS API call failed", err)
-			Utils.log("REQUEST", request)
+			Utils.log(isResponse.status, request)
+
 			return isResponse;
 		}
 

@@ -9,6 +9,15 @@
 			</div>
 
 			<input
+				v-else-if="type == 'password'"
+				class="input is-small"
+				type="password"
+				:placeholder="placeholder"
+				:value="value"
+				@change="$emit('update:value', $event.target.value)"
+			/>
+
+			<input
 				v-else
 				class="input is-small"
 				type="text"

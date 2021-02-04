@@ -17,7 +17,13 @@ export default class InteractionStudioResponse {
 		const campaignResponse: any = body?.campaignResponses?.find((c: any) => c.campaignName.toLowerCase().trim() === config.campaign.toLowerCase().trim())
 
 		if (!campaignResponse) {
-			isResponse.status = "WARNING: Server-Side campaign '" + config.campaign + "' was not found. Check if the campaign is published and if the name is correct. Actions will be still captured by IS, but no data will be returned back to MC."
+			isResponse.status = `WARNING: Server-Side campaign '${config.campaign}' was not found.\n\n`
+				+ 'Actions will be still captured by IS, but no data will be returned back to MC.\n\n'
+				+ '- Check if the campaign is published and the name is correct.\n'
+				+ '- Check if all Custom User Attributes use our workaround described in the documentation.\n'
+				+ '- Check if a recipe used in the campaign returns recos for test users.\n'
+				+ '- Use the PREVIEW button of the Server-Side campaign to make sure that it is return for your test users.\n'
+
 			Utils.log(isResponse.status, body)
 			return isResponse
 		}
