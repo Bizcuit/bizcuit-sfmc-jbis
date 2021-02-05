@@ -42,7 +42,8 @@ JBIS allows to receive real-time information about a customer from Interaction S
 * Set the value of the Target attribute (could be any non-empty value, eg: “-”) 
 * Add the following fields. _All fields are optional_. Use Attributes (attribute, attribute2, attribute3) to pass any information back to MC. *Attribute valuesare just examples*
 
-### IMPORTANT: When profile data can't be sent back to MC (Server-Side campaigns are not returned):
+### IMPORTANT: When profile data can't be sent back to MC 
+### (Server-Side campaigns are not returned):
 
 * A campaign includes “Promoted Content” (eg: recipe recommendations) and this recipe does not return the min number of required recommendations. Make sure that your recipe returns smth for your test users
 * A campaign includes a “Custom User Attribute” and the user does not have a value set for this attribute. Make sure that your test users have values for the attributes used in the campaign. _*Check a small workaround below*_
