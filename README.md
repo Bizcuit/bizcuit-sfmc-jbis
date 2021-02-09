@@ -87,6 +87,7 @@ IMPORTANT: A Server-Side campaign with recommendations is not returned to a user
 * Set the “Item IDs only” flag
 
 ![Create campaign](public/img/recs_mess_settings.png)
+
 ![Create campaign](public/img/recs_recipe.png)
 
 ### Optional setup
