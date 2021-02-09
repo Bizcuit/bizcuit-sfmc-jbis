@@ -11,7 +11,7 @@ The following profile information is sent back to MC:
 * User Group (values could be either “Control” or “Default” for IS A/B tests)
 * Experience
 
-![Journey sample image](journey.png)
+![Journey sample image](public/img/opener.png)
 
 
 ## What can be done
@@ -25,7 +25,7 @@ JBIS allows to receive real-time information about a customer from Interaction S
 
 ## High-level architectural diagram
 
-![Architecture image](architecture.png)
+![Architecture image](public/img/architecture.png)
 
 
 
