@@ -73,3 +73,24 @@ recommendations | $items | Promoted Content | Comma separated list of recommende
 attribute | Example: #field(${user.attributes.country},'') | Text | Any attribute. Use "Dynamic" attribute selector menu. EG: ${user.attributes.country}
 attribute2 | Example: #field(${user.attributes.language},'') | Text | Any attribute. Use "Dynamic" attribute selector menu. EG: ${user.attributes.country}
 attribute3 | Example: #field(${user.attributes.score},'') | Text | Any attribute. Use "Dynamic" attribute selector menu. EG: ${user.attributes.country}
+
+![Create campaign](public/img/ss_campaign_setup.png)
+
+### Configure recommendations (if required)
+
+IMPORTANT: A Server-Side campaign with recommendations is not returned to a user, if the recipe does not return any recommendations for this user. If you use recommendations, make sure that your recipe always returns smth for all users or use STATIC recommendations instead of recipes.
+
+* Click “Message Settings”
+* Open “Promoted Content” tab
+* Select “Recommendations” as the Type
+* Select the recipe you would like to use
+* Set the “Item IDs only” flag
+
+![Create campaign](public/img/recs_mess_settings.png)
+![Create campaign](public/img/recs_recipe.png)
+
+### Optional setup
+
+Optionally configure different experiences and campaign targeting in the setup section of the Server-Side campaign
+
+### Save and publish your Server-Side campaign
