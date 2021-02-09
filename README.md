@@ -33,7 +33,7 @@ JBIS allows to receive real-time information about a customer from Interaction S
 
 ### Open IS and create a new “Server Side Campaign”
 
-![Create campaign](campaign.png)
+![Create campaign](public/img/ss_campaign.png)
 
 ### Configure campaign output
 
@@ -42,7 +42,7 @@ JBIS allows to receive real-time information about a customer from Interaction S
 * Set the value of the Target attribute (could be any non-empty value, eg: “-”) 
 * Add the following fields. _All fields are optional_. Use Attributes (attribute, attribute2, attribute3) to pass any information back to MC. *Attribute valuesare just examples*
 
-### IMPORTANT: When profile data can't be sent back to MC (Server-Side campaigns are not returned):
+### IMPORTANT: When profile data can't be sent back to MC (When Server-Side campaigns are not returned):
 
 * A campaign includes “Promoted Content” (eg: recipe recommendations) and this recipe does not return the min number of required recommendations. Make sure that your recipe returns smth for your test users
 * A campaign includes a “Custom User Attribute” and the user does not have a value set for this attribute. Make sure that your test users have values for the attributes used in the campaign. _*Check a small workaround below*_
@@ -66,3 +66,10 @@ Value that you should use in your Server-Side campaign:
 
 `#field(${user.attributes.country}, '')`
 
+Name | Value | Type | Description
+--- | --- | --- | ---
+segments | ${tools.user.get('SegmentNames','none')} | Text | Comma separated list of segments.
+recommendations | $items | Promoted Content | Comma separated list of recommended item IDs
+attribute | Example: #field(${user.attributes.country},'') | Text | Any attribute. Use "Dynamic" attribute selector menu. EG: ${user.attributes.country}
+attribute2 | Example: #field(${user.attributes.language},'') | Text | Any attribute. Use "Dynamic" attribute selector menu. EG: ${user.attributes.country}
+attribute3 | Example: #field(${user.attributes.score},'') | Text | Any attribute. Use "Dynamic" attribute selector menu. EG: ${user.attributes.country}
