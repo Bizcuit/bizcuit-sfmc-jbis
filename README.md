@@ -167,10 +167,14 @@ Optionally configure different experiences and campaign targeting in the setup s
 * In “Attribute Groups” select “Journey Data”, then “Custom Activity: JBIS”
 * Build filtering conditions based on the attributes returned by IS
 
+![Decision Split](public/img/decision_split.png)
+
 ### Save data to a dataextension
 
 * Add Update Contact activity after JBIS activity
 * Select a target dataextension
 * Use output substitution strings as values
 
+![Dataextension](public/img/dataextension_1.png)
+![Dataextension](public/img/dataextension_2.png)
 
