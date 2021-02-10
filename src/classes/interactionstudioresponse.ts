@@ -13,7 +13,7 @@ export default class InteractionStudioResponse {
 
 	public static getFromResponseBody(body: any, config: InteractionStudioConfig) {
 		const isResponse = new InteractionStudioResponse()
-		const recommendationsList: Array<string> = new Array<string>()
+		const recommendationsList: string[] = new Array<string>()
 		const campaignResponse: any = body?.campaignResponses?.find((c: any) => c.campaignName.toLowerCase().trim() === config.campaign.toLowerCase().trim())
 
 		if (!campaignResponse) {

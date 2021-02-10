@@ -26,7 +26,7 @@ export default class InteractionStudio {
 
 		if (this.config.token !== '') {
 			const buffer = Buffer.from(this.config.token, "utf8");
-			request.headers["Authorization"] = `Basic ${buffer.toString("base64")}`
+			request.headers.Authorization = `Basic ${buffer.toString("base64")}`
 		}
 
 		try {

@@ -2,7 +2,7 @@
 
 JBIS is a Custom Journey Builder activity that allows to send Interaction Studio Actions/Events directly from Journey Builder, and to receive IS consumer profile back in MC. 
 
-In a nutshell, this activity allows you to receive segment membership and recommendations (and other information) from IS and use this information in your Journey. For example for decision splits or anything else.
+In a nutshell, this activity allows you to receive segment membership and recommendations (and other information) from IS and use this information in your Journey. For example for smart real-time decision splits or anything else.
 
 The following profile information is sent back to MC:
 * List of segments
@@ -13,6 +13,15 @@ The following profile information is sent back to MC:
 
 ![Journey sample image](public/img/opener.png)
 
+## Installation
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+or
+
+`npm install`
+`npm run build`
+`npm run start`
 
 ## What can be done
 

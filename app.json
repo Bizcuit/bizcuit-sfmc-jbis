@@ -1,0 +1,5 @@
+{
+	"name": "JBIS: MC Journey Builder Custom Activity for Interaction Studio",
+	"description": "In a nutshell, this activity allows you to receive segment membership and recommendations (and other information) from IS and use this information in your Journey. For example for smart real-time decision splits or anything else.",
+	"repository": "https://github.com/Bizcuit/bizcuit-sfmc-jbis"
+}
