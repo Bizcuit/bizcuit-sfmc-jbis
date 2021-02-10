@@ -2,7 +2,7 @@
 
 ## Installation
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FBizcuit%2Fbizcuit-sfmc-jbis%2Ftree%2Fmaster) 
 
 or 
 
