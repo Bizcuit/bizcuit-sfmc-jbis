@@ -41,7 +41,17 @@ JBIS allows to receive real-time information about a customer from Interaction S
 
 ## Interaction Studio setup
 
-### Open IS and create a new “Server Side Campaign”
+### Dataset configuration
+
+* Go to Dataset “Settings” → “General Setup”
+* Open “Advanced Settings” section
+* Set the value of the “Select the Identity attribute to use as the Server Side events Identity” parameter (value depends on the use-case)
+
+![Dataset Setup](public/img/dataset_1.jpg)
+
+![Identity Resolution](public/img/dataset_2.jpg)
+
+### Create a new “Server Side Campaign”
 
 ![Create campaign](public/img/ss_campaign.png)
 
