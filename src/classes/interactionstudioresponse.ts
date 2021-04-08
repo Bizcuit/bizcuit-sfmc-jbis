@@ -40,7 +40,7 @@ export default class InteractionStudioResponse {
 		isResponse.segments = campaignResponse?.payload?.segments || ""
 
 		if (campaignResponse?.payload?.orders?.length > 0) {
-			const orders: Array<any> = campaignResponse?.payload?.orders
+			const orders: any[] = campaignResponse?.payload?.orders
 			let order = null
 
 			if (campaignResponse?.payload?.orderType === "Current Cart") {
@@ -50,8 +50,12 @@ export default class InteractionStudioResponse {
 				order = orders.filter(o => o.status === "Purchased").sort((a, b) => a.purchaseDate - b.purchaseDate).pop()
 			}
 
+			Utils.log("Order", order)
+
 			if (order) {
-				isResponse.order = campaignResponse?.payload?.orderAsXml ? js2xml(order) : JSON.stringify(order)
+				isResponse.order = campaignResponse?.payload?.orderAsXml
+					? js2xml(order, { compact: true, ignoreComment: true, spaces: 0 })
+					: JSON.stringify(order)
 			}
 		}
 
@@ -61,14 +65,14 @@ export default class InteractionStudioResponse {
 				isResponse.attribute = message?.dataMap?.attribute || isResponse.attribute
 				isResponse.attribute2 = message?.dataMap?.attribute2 || isResponse.attribute2
 				isResponse.attribute3 = message?.dataMap?.attribute3 || isResponse.attribute3
-	
+
 				isResponse.segments = message?.dataMap?.segments || isResponse.segments
-	
+
 				if (message?.dataMap?.recommendations?.length) {
 					recommendationsList.push(message.dataMap.recommendations.map((r: any) => r._id))
 				}
 			})
-	
+
 			isResponse.recommendations = recommendationsList.join(",")
 		}
 
