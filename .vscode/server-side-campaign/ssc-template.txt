@@ -1,0 +1,85 @@
+import { RecommendationsConfig, recommend } from "recs";
+import { UserSegmentLookup, UserSegmentReference, UserAttributeLookup, UserAttributeReference } from "common";
+
+
+export class JbisTemplate implements CampaignTemplateComponent {
+	@title("User Attribute 1")
+	@lookupOptions(() => new UserAttributeLookup())
+	_attribute1: UserAttributeReference
+
+	@title("User Attribute 2")
+	@lookupOptions(() => new UserAttributeLookup())
+	_attribute2: UserAttributeReference
+
+	@title("User Attribute 3")
+	@lookupOptions(() => new UserAttributeLookup())
+	_attribute3: UserAttributeReference
+
+	@title("Segments")
+	@subtitle("segments are returned as a comma separated list")
+	@lookupOptions(() => new UserSegmentLookup())
+	_segments: UserSegmentReference[]
+
+	@title("Order History")
+	orderType: "-" | "Current Cart" | "Last Order" = "-";
+
+	@title("Return Order as XML")
+	orderAsXml: boolean = true;
+
+
+	@title("Max number of recommendations")
+	_maximumNumberOfItems: 1 | 2 | 4 | 6 = 1;
+
+	@title(" ")
+	_recsConfig: RecommendationsConfig = new RecommendationsConfig()
+		.restrictItemType("Product")
+		.restrictMaxResults(this._maximumNumberOfItems);
+
+	getAttributeValue(user: User, attribute: UserAttributeReference): string {
+		let result = "";
+
+		if (attribute && user) {
+			result = (user?.attributes?.[attribute.id] as Attribute | undefined)?.value?.toString();
+		}
+
+		return result || "";
+	}
+
+	run(context: CampaignComponentContext) {
+		let segments = "";
+		let recommendations = "";
+		let orders = null;
+
+		if (this._segments && this._segments.length > 0) {
+			const segmentsList = [];
+			this._segments.forEach(s => {
+				const joinDate = context.user.getSegmentJoinDate(s.id);
+				if (joinDate) {
+					segmentsList.push(s.label);
+				}
+			});
+			segments = segmentsList.join(",");
+		}
+
+		if (this._recsConfig && this._recsConfig?.recipe) {
+			this._recsConfig.maxResults = this._maximumNumberOfItems;
+			const recs = recommend(context, this._recsConfig);
+			const recsList = recs?.map(i => i.id) || [];
+			recommendations = recsList.join(",");
+		}
+
+		if (this.orderType != "-" && context?.user?.orderHistory?.length > 0) {
+			orders = context.user.orderHistory;
+		}
+
+		return {
+			attribute1: this.getAttributeValue(context?.user, this._attribute1),
+			attribute2: this.getAttributeValue(context?.user, this._attribute2),
+			attribute3: this.getAttributeValue(context?.user, this._attribute3),
+			segments: segments,
+			recommendations: recommendations,
+			orders: orders
+		};
+	}
+
+}
