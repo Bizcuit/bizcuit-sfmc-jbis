@@ -50,7 +50,8 @@ class ConfigController {
 						{ "userGroup": "" },
 						{ "attribute": "" },
 						{ "attribute2": "" },
-						{ "attribute3": "" }
+						{ "attribute3": "" },
+						{ "order": "" }
 					],
 					"url": `https://${host}/actions/execute`
 				}
@@ -127,6 +128,11 @@ class ConfigController {
 									"access": "visible"
 								},
 								"attribute3": {
+									"dataType": "Text",
+									"direction": "out",
+									"access": "visible"
+								},
+								"order": {
 									"dataType": "Text",
 									"direction": "out",
 									"access": "visible"
