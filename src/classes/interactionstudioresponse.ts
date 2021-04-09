@@ -53,7 +53,7 @@ export default class InteractionStudioResponse {
 			if (order) {
 				isResponse.order = campaignResponse?.payload?.orderAsXml
 					? '<order>' + js2xml(order, { compact: true, ignoreComment: true, spaces: 0 }) + '</order>'
-					: '|' + JSON.stringify(order) + '|'
+					: ' ' + JSON.stringify(order) + ' '
 			}
 		}
 
