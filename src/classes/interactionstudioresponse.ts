@@ -50,12 +50,10 @@ export default class InteractionStudioResponse {
 				order = orders.filter(o => o.status === "Purchased").sort((a, b) => a.purchaseDate - b.purchaseDate).pop()
 			}
 
-			Utils.log("Order", order)
-
 			if (order) {
 				isResponse.order = campaignResponse?.payload?.orderAsXml
-					? js2xml(order, { compact: true, ignoreComment: true, spaces: 0 })
-					: JSON.stringify(order)
+					? '<order>' + js2xml(order, { compact: true, ignoreComment: true, spaces: 0 }) + '</order>'
+					: '|' + JSON.stringify(order) + '|'
 			}
 		}
 
