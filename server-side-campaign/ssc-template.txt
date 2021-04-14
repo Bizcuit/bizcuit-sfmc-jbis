@@ -15,24 +15,24 @@ export class JbisTemplate implements CampaignTemplateComponent {
     _attribute3: UserAttributeReference
 
     @title("Segments")
-    @subtitle("segments are returned as a comma separated list")
+	@subtitle("Segments are returned as a comma separated list of segment names")
     @lookupOptions(() => new UserSegmentLookup())
     _segments: UserSegmentReference[]
 
-    @title("Order History")
-    orderType: "-" | "Current Cart" | "Last Order" = "-";
-
-    @title("Return Order as XML")
-    orderAsXml: boolean = true;
-
-
-    @title("Max number of recommendations")
+	@title("Max number of recommendations")
+	@subtitle("Recommendations are returned as a comma separated list of Product IDs")
     _maximumNumberOfItems: 1 | 2 | 4 | 6 = 1;
 
     @title(" ")
     _recsConfig: RecommendationsConfig = new RecommendationsConfig()
         .restrictItemType("Product")
         .restrictMaxResults(this._maximumNumberOfItems);
+
+	@title("Order History")
+	orderType: "-" | "Current Cart" | "Last Order" = "-";
+
+	@title("Return Order as XML")
+	orderAsXml: boolean = true;
 
     getAttributeValue(user: User, attribute: UserAttributeReference): string {
         let result = "";
