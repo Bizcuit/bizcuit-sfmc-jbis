@@ -50,7 +50,8 @@ export default class InteractionStudio {
 		return {
 			"action": this.config.action,
 			"source": {
-				"channel": "Server"
+				"channel": "Server",
+				"application": "JBIS"
 			},
 			"user": {
 				"id": this.userId
