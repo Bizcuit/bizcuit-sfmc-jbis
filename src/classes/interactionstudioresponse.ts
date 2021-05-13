@@ -35,7 +35,7 @@ export default class InteractionStudioResponse {
 		isResponse.userGroup = campaignResponse?.userGroup || ""
 		isResponse.attribute = campaignResponse?.payload?.attribute1 || ""
 		isResponse.attribute2 = campaignResponse?.payload?.attribute2 || ""
-		isResponse.attribute3 = campaignResponse?.payload?.attribute2 || ""
+		isResponse.attribute3 = campaignResponse?.payload?.attribute3 || ""
 		isResponse.recommendations = campaignResponse?.payload?.recommendations || ""
 		isResponse.segments = campaignResponse?.payload?.segments || ""
 
