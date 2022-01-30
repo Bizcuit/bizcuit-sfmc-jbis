@@ -1,61 +1,84 @@
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios'
 import Utils from './utils'
-import InteractionStudioConfig from './interactionstudioconfig'
-import InteractionStudioResponse from './interactionstudioresponse'
+import JourneyBuilderActivityConfig from './journeybuilderactivityconfig'
+import { resolveTripleslashReference } from 'typescript'
+import { networkInterfaces } from 'os'
 
 export default class InteractionStudio {
-	private config: InteractionStudioConfig
+	private eventApiEndpoint: string
+    private eventApiKey: string
+    private eventApiSecret: string
+    private eventApiToken: string
 
-	constructor(config: InteractionStudioConfig) {
-		this.config = config
+	constructor() {
+		this.eventApiEndpoint = process.env.IS_API_ENDPOINT || ""
+        this.eventApiKey = process.env.IS_API_KEY || ""
+        this.eventApiSecret = process.env.IS_API_SECRET || ""
+        
+        const tokenBuffer = Buffer.from(this.eventApiKey + ":" + this.eventApiSecret, "utf8");
+        this.eventApiToken = tokenBuffer.toString("base64")
 	}
 
-	public get userId(): string {
-		return this.config.userField === 'SubscriberKey' ? this.config.contactKey : this.config.emailAddress
-	}
-
-	public async executeApi(payload: any): Promise<InteractionStudioResponse> {
+	public async callEventApi(jbConfig: JourneyBuilderActivityConfig, payload: any): Promise<any> {
 		const request: AxiosRequestConfig = {
 			method: 'POST',
-			url: `https://${this.config.account}.evergage.com/api2/${this.config.token !== '' ? 'authevent' : 'event'}/${this.config.dataset}`,
+			url: `${this.eventApiEndpoint}/${jbConfig.dataset}`,
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+                "Authorization": `Basic ${this.eventApiToken}`
 			},
 			data: payload
 		}
 
-		if (this.config.token !== '') {
-			const buffer = Buffer.from(this.config.token, "utf8");
-			request.headers.Authorization = `Basic ${buffer.toString("base64")}`
-		}
-
 		try {
-			const response = await axios(request)
-			const isResponse: InteractionStudioResponse = InteractionStudioResponse.getFromResponseBody(response?.data, this.config)
-			return isResponse
+			const eventApiResponse = await axios(request)
+			return this.parseEventApiResponse(eventApiResponse?.data)
 		}
 		catch (err) {
-			const isResponse: InteractionStudioResponse = new InteractionStudioResponse();
-			isResponse.status = "ERROR: IS API call failed with message: " + err.message;
+			let result = new Map<string, string>();
+			result.set("__status",  `ERROR: IS API call failed with message: ${err?.message}`);
 
-			Utils.log(isResponse.status, request)
+			Utils.log(result.get("__status") || "", request)
 
-			return isResponse;
+			return result;
 		}
 
-		return new InteractionStudioResponse()
+        return null;
 	}
 
-	public getDefaultPayload(): any {
-		return {
-			"action": this.config.action,
+	public getEventApiPayload(jbConfig: JourneyBuilderActivityConfig): any {
+		const payload: any = {
+			"action": jbConfig.action,
 			"source": {
 				"channel": "Server",
 				"application": "JBIS"
 			},
 			"user": {
-				"id": this.userId
+				"attributes": {}
 			}
 		}
+
+        payload.user.attributes[jbConfig.is_identity_attribute_name] = jbConfig.is_identity_attribute_value
+
+        return payload
+	}
+
+    public parseEventApiResponse(eventApiResponseBody: any): Map<String, String> {
+		let result = new Map<String, String>()
+        let isCampaignFound = false
+
+        eventApiResponseBody?.campaignResponses?.forEach((campaignResponse: any) => {
+            if(campaignResponse.jbis){
+                isCampaignFound = true;
+
+                for(let prop in campaignResponse.jbis){
+                    result.set(prop, campaignResponse.jbis[prop])
+                }
+            }
+        });
+
+        result.set("__status", isCampaignFound ? "OK" : "No matching Server-Side campaigns found")
+
+        return result;
 	}
 }

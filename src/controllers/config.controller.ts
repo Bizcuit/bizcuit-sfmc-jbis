@@ -32,27 +32,12 @@ class ConfigController {
 			"arguments": {
 				"execute": {
 					"inArguments": [
-						{ "contactKey": "{{Contact.Key}}" },
-						{ "emailAddress": "{{InteractionDefaults.Email}}" },
-
-						{ "is_account": "" },
-						{ "is_dataset": "" },
-						{ "is_token": "" },
-						{ "is_userid_field": "" },
-						{ "is_custom_payload": "" },
-						{ "is_action": "" },
-						{ "is_campaign": "" }
+						{ "is_identity_attribute_name": "" },
+                        { "is_identity_attribute_value": ""},
+                        { "is_action": "" },
+						{ "is_dataset": "" }
 					],
-					"outArguments": [
-						{ "segments": "" },
-						{ "recommendations": "" },
-						{ "experience": "" },
-						{ "userGroup": "" },
-						{ "attribute": "" },
-						{ "attribute2": "" },
-						{ "attribute3": "" },
-						{ "order": "" }
-					],
+					"outArguments": [],
 					"url": `https://${host}/actions/execute`
 				}
 			},
@@ -85,60 +70,12 @@ class ConfigController {
 				"arguments": {
 					"execute": {
 						"inArguments": [
-							{ "contactKey": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "emailAddress": { "dataType": "Email", "isNullable": false, "direction": "in" } },
-							{ "is_account": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "is_dataset": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "is_token": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							{ "is_userid_field": { "dataType": "Text", "isNullable": false, "direction": "in" } },
-							{ "is_custom_payload": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							{ "is_action": { "dataType": "Text", "isNullable": true, "direction": "in" } },
-							{ "is_campaign": { "dataType": "Text", "isNullable": true, "direction": "in" } }
+                            { "is_identity_attribute_name": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+                            { "is_identity_attribute_value": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+                            { "is_action": { "dataType": "Text", "isNullable": false, "direction": "in" } },
+                            { "is_dataset": { "dataType": "Text", "isNullable": false, "direction": "in" } }
 						],
-						"outArguments": [
-							{
-								"segments": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"recommendations": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"experience": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"userGroup": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"attribute": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"attribute2": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"attribute3": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								},
-								"order": {
-									"dataType": "Text",
-									"direction": "out",
-									"access": "visible"
-								}
-							}
-						]
+						"outArguments": []
 					}
 				}
 			}

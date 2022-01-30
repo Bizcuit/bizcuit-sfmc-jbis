@@ -2,8 +2,7 @@ import * as express from 'express'
 import { Request, Response } from 'express'
 import Utils from '../classes/utils'
 import InteractionStudio from '../classes/interactionstudio'
-import InteractionStudioConfig from '../classes/interactionstudioconfig'
-import InteractionStudioResponse from '../classes/interactionstudioresponse'
+import JourneyBuilderActivityConfig from '../classes/journeybuilderactivityconfig'
 
 class ActionsController {
 	public path = '/actions'
@@ -40,9 +39,9 @@ class ActionsController {
 	public async execute(req: Request, res: Response) {
 		Utils.log('EXECUTE', req.body)
 
-		const isConfig = InteractionStudioConfig.getFromRequest(req.body)
-		const is = new InteractionStudio(isConfig)
-		const isResponse = await is.executeApi(is.getDefaultPayload())
+		const jbConfig = JourneyBuilderActivityConfig.getFromRequest(req.body)
+		const is = new InteractionStudio()
+		const isResponse = await is.callEventApi(jbConfig, is.getEventApiPayload(jbConfig))
 
 		Utils.log('RESPONSE', isResponse)
 
