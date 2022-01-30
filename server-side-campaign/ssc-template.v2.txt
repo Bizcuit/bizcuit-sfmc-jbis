@@ -1,0 +1,145 @@
+import { RecommendationsConfig, recommend } from "recs";
+import { UserAttributeLookup, UserAttributeReference } from "common";
+
+export class PayloadField {
+    @title("Property Name")
+    field: string;
+
+    @title("Property Type")
+    @options(["Anchors", "Order History", "Promotions", "Recommendations", "Static String", "User Attribute"])
+    valueType: string;
+
+    @shownIf(this, self => self.valueType === "Static String")
+    @title("Value")
+	value: string;
+
+    setValue(context: CampaignComponentContext){
+        switch(this.valueType){
+            case "User Attribute":
+                this.value = this.getUserAttributeValue(context);
+                break;
+            case "Recommendations":
+                this.value = this.getRecommendationsValue(context);
+                break;
+            case "Promotions":
+                this.value = this.getPromotionsValue(context);
+                break;
+            case "Order History":
+                this.value = this.getOrderHistoryValue(context);
+                break;
+            case "Anchors":
+                this.value = this.getAchorsValue(context);
+                break;
+        }
+    }
+
+    @shownIf(this, self => self.valueType === "User Attribute")
+    @title("Value")
+    @lookupOptions(() => new UserAttributeLookup())
+    attribute: UserAttributeReference;
+
+    getUserAttributeValue(context: CampaignComponentContext){
+        if(this.attribute) {
+            return (context.user?.attributes?.[this.attribute?.id] as Attribute|undefined)?.value?.toString() || "";
+        }
+
+        return "";
+    }
+
+    @shownIf(this, self => self.valueType === "Recommendations")  
+    @title(" ")
+    recipe: RecommendationsConfig = new RecommendationsConfig()
+        .restrictItemType("Product").restrictMaxResults(4);
+
+    @shownIf(this, self => self.valueType === "Recommendations")  
+    @title("Number of recs")
+    recipeMaxRecs: 2 | 4 | 8 | 12 = 2;
+
+    getRecommendationsValue(context: CampaignComponentContext){
+        let result = [];
+
+        if(this.recipe && this.recipe.recipeId){
+            this.recipe.maxResults = this.recipeMaxRecs;
+            
+            const recs = recommend(context, this.recipe);
+            
+            recs?.forEach(item => {
+                result.push({
+                    id: item.id,
+                    name: item?.attributes?.["name"]?.value?.toString(),
+                    imageUrl: item?.attributes?.["imageUrl"]?.value?.toString(),
+                    url: item?.attributes?.["url"]?.value?.toString(),
+                    inventoryCount: item?.attributes?.["inventoryCount"]?.value?.toString(),
+                    price: item?.attributes?.["price"]?.value?.toString()
+                });
+            });
+        }
+
+        return JSON.stringify(result);
+    }
+
+    getPromotionsValue(context: CampaignComponentContext){
+        return "NOT IMPLEMENTED";
+    }
+
+    getAchorsValue(context: CampaignComponentContext){
+        return "NOT IMPLEMENTED";
+    }
+
+    @shownIf(this, self => self.valueType === "Order History")  
+    @title("Order Type")
+    @options(["Current Cart", "Last Purchase"])
+    orderType: string = "Last Purchase";
+
+    getOrderHistoryValue(context: CampaignComponentContext){
+        let orders = context.user.orderHistory;
+        
+        if(orders && orders.length){
+            switch(this.orderType){
+                case "Current Cart":
+                    return JSON.stringify(orders.filter(o => o.status === "Open")?.pop());
+                case "Last Purchase":
+                    return JSON.stringify(
+                        orders.filter(o => o.status === "Purchased").sort((a, b) => a.purchaseDate.getTime() - b.purchaseDate.getTime())?.pop()
+                    );
+            }
+        }
+
+        return "";
+    }
+}
+
+export class JourneyBuilderPayload {
+    @title(" ")
+    fields: PayloadField[];
+
+    getPayload(context: CampaignComponentContext){
+        let result = {
+            campaign: context.campaignId,
+            experience: context.experienceId,
+            userGroup: context.userGroup,
+        };
+
+        this.fields.forEach(f => {
+            if(f.field){
+                f.setValue(context);
+                result[f.field] = f.value;
+            }
+        })
+
+        return result;
+    }
+}
+
+
+export class JourneyBuilderTemplate implements CampaignTemplateComponent {
+    @title("Event Properties")
+    templateConfig: JourneyBuilderPayload;
+
+    run(context: CampaignComponentContext) {
+        const result = this.templateConfig ? this.templateConfig.getPayload(context) : {};
+        return {
+            jbis: result;
+        };
+    }
+}
