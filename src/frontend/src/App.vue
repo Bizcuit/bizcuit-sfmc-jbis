@@ -4,14 +4,7 @@
 
 		<div v-if="ui.currentTab == 'is_setup'">
 			<div class="columns">
-				<div class="column">
-					<field
-						label="Account and region"
-						type="text"
-						placeholder="EG: cumulus.germany-2"
-						:value.sync="config.is_account"
-					/>
-				</div>
+
 				<div class="column">
 					<field
 						label="Dataset"
@@ -21,45 +14,36 @@
 					/>
 				</div>
 
-			</div>
-
-			<div class="columns">
-				<div class="column is-one-quarter">
-					<field
-						label="UserID field"
-						type="select"
-						placeholder="EG: abcdef"
-						:value.sync="config.is_userid_field"
-						:options="['SubscriberKey', 'Email']"
-					/>
-				</div>
-				<div class="column">
-					<field
-						label="IS Authentication Config"
-						type="password"
-						placeholder="Format - [YOUR_API_Key_ID]:[YOUR_API_Key_Secret]"
-						:value.sync="config.is_token"
-					/>
-				</div>
-			</div>
-
-			<div class="columns">
 				<div class="column is-one-quarter">
 					<field
 						label="IS Action"
 						type="text"
-						placeholder="EG: JB_ACTION"
+						placeholder="EG: JBIS_Action"
 						:value.sync="config.is_action"
 					/>
 				</div>
+			</div>
+
+			<div class="columns">
 				<div class="column">
 					<field
-						label="IS Campaign Name"
+						label="IS Identity Attribute"
 						type="text"
-						placeholder="EG: JB_CAMPAIGN"
-						:value.sync="config.is_campaign"
+						placeholder="EG: sfmcContactKey"
+						:value.sync="config.is_identity_attribute_name"
 					/>
 				</div>
+				<div class="column is-one-quarter">
+					<field
+						label="UserID field"
+						type="select"
+						:value.sync="config.is_identity_attribute_value"
+						:options="['SubscriberKey', 'Email']"
+					/>
+				</div>
+			</div>
+
+			<div class="columns">
 				<div class="column is-one-quarter">
 					<label class="label is-small">Test configuration</label>
 					<a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Send Action</a>
@@ -70,14 +54,7 @@
 		<h3 class="is-size-6 mt-5"><strong>Output substitution strings:</strong></h3>
 
 		<div class="tags mt-3">
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.segments}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.order}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.userGroup}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.recommendations}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.experience}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.attribute}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.attribute2}}'"></span>
-			<span class="tag is-link" v-html="'{{Interaction.' + (activity ? activity.key : '') + '.attribute3}}'"></span>
+            <span class="tag is-link" v-for="arg in outArguments" :key="arg">Interaction.{{activity ? activity.key : ''}}.{{arg}}</span>
 		</div>
 
 	</div>
@@ -96,16 +73,15 @@ export default {
 			connection: null,
 			activity: null,
 
+            outputArguments: [],
+
 			testUserId: "",
 
 			config: {
-				is_account: "",
 				is_dataset: "",
-				is_token: "",
-				is_userid_field: "",
 				is_action: "",
-				is_campaign: "",
-				is_custom_payload: "",
+                is_identity_attribute_name: "",
+                is_identity_attribute_value: "",
 			},
 
 			ui: {
@@ -124,6 +100,8 @@ export default {
 		init: function (activity) {
 			this.activity = activity;
 			this.getArgumentValues(activity);
+            this.readActivityOutputArguments(activity);
+
 			console.log("INIT", this.activity);
 		},
 		
@@ -142,23 +120,24 @@ export default {
 				referrerPolicy: 'no-referrer',
 				body: JSON.stringify({
 					inArguments: [
-						{ contactKey: userId || "test_jbis" },
-						{ emailAddress: userId || "test_jbis@test.test" },
-						{ is_account: this.config.is_account },
 						{ is_dataset: this.config.is_dataset },
-						{ is_token: this.config.is_token },
-						{ is_userid_field: this.config.is_userid_field },
 						{ is_action: this.config.is_action },
-						{ is_campaign: this.config.is_campaign }
+                        { is_identity_attribute_name: this.config.is_identity_attribute_name },
+                        { is_identity_attribute_value: userId || "test_jbis@test.test" }
 					]
 				})
 			})
 			.then(response => response.json())
+            .then(data => {
+                this.updateActivityOutputArguments(data);
+
+                return data;
+            })
 			.then(data => {
-				let message = "Status - " + data.status;
+				let message = "Status - " + data.__status;
 
 				for(let prop in data){
-					if(prop !== "status" && data[prop]){
+					if(prop !== "__status" && data[prop]){
 						message += '\n===============\n' + prop + " = " + data[prop];
 					}
 				}
@@ -172,6 +151,43 @@ export default {
 				this.ui.isTesting = false;
 			});
 		},
+
+        readActivityOutputArguments: function(activity){
+            if(activity?.arguments?.execute?.outArguments === undefined){
+                return;
+            }
+            
+            for(const arg of Object.keys(activity.arguments.execute.outArguments)){
+                this.outputArguments.push(arg);
+            }
+        },
+
+        updateActivityOutputArguments: function(campaignResponseData){
+            if(this?.activity?.metaData === undefined){
+                return;
+            }
+            
+            const outArguments = this.activity.arguments.execute.outArguments = [];
+            const outArgumentsSchema = this.active.schema.arguments.execute.outArguments = [];
+
+            this.outputArguments = [];
+
+            console.log(JSON.stringify(this.activity, null, 2));
+
+            for(let prop in campaignResponseData){
+                const outArg = {};
+                const outSchemaArg = {}
+
+                outArg[prop] = "";
+                outSchemaArg[prop] =  { "dataType": "Text", "isNullable": true, "direction": "in" };
+
+                outArguments.push(outArg);
+                outArgumentsSchema.push(outSchemaArg);
+                this.outputArguments.push(prop);
+            }
+
+            console.log(JSON.stringify(this.activity, null, 2));
+        },
 
 		saveAndClose: function () {
 			if (this?.activity?.metaData === undefined) {

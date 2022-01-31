@@ -139,7 +139,7 @@ export class JourneyBuilderTemplate implements CampaignTemplateComponent {
     run(context: CampaignComponentContext) {
         const result = this.templateConfig ? this.templateConfig.getPayload(context) : {};
         return {
-            jbis: result;
+            jbis: result
         };
     }
 }
