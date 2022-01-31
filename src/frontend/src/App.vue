@@ -269,7 +269,15 @@ export default {
         this.connection.on("initActivity", this.init);
         this.connection.trigger("ready");
 
+        this.connection.on("clickedNext", () => {
+            this.toggleCurrentTab(1);
+            this.connection.trigger("nextStep");
+        });
 
+        this.connection.on("gotoStep", (e) => {
+            this.ui.currentTab = e.key;
+            this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
+        });
 
 /*
         this.connection.on("requestedTokens", this.log);
