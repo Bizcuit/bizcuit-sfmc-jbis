@@ -168,7 +168,7 @@ export default {
             }
             
             const outArguments = this.activity.arguments.execute.outArguments = [];
-            const outArgumentsSchema = this.active.schema.arguments.execute.outArguments = [];
+            const outArgumentsSchema = this.activity.schema.arguments.execute.outArguments = [];
 
             this.outputArguments = [];
 
