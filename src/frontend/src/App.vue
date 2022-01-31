@@ -54,7 +54,7 @@
         <h3 class="is-size-6 mt-5"><strong>Output substitution strings:</strong></h3>
 
         <div class="tags mt-3">
-            <span class="tag is-link" v-for="arg in outArguments" :key="arg">Interaction.{{activity ? activity.key : ''}}.{{arg}}</span>
+            <span class="tag is-link" v-for="arg in outputArguments" :key="arg">Interaction.{{activity ? activity.key : ''}}.{{arg}}</span>
         </div>
 
     </div>
@@ -177,7 +177,7 @@ export default {
                 const outSchemaArg = {}
 
                 outArg[prop] = "";
-                outSchemaArg[prop] =  { "dataType": "Text", "isNullable": true, "direction": "in" };
+                outSchemaArg[prop] =  { "dataType": "Text", "isNullable": true, "direction": "out" };
 
                 outArguments.push(outArg);
                 outArgumentsSchema.push(outSchemaArg);
