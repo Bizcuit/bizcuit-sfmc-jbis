@@ -14,7 +14,7 @@
                     />
                 </div>
 
-                <div class="column is-one-quarter">
+                <div class="column">
                     <field
                         label="IS Action"
                         type="text"
@@ -33,7 +33,7 @@
                         :value.sync="config.is_identity_attribute_name"
                     />
                 </div>
-                <div class="column is-one-quarter">
+                <div class="column">
                     <field
                         label="UserID field"
                         type="select"
@@ -177,7 +177,7 @@ export default {
                 const outSchemaArg = {}
 
                 outArg[prop] = "";
-                outSchemaArg[prop] =  { "dataType": "Text", "isNullable": true, "direction": "out" };
+                outSchemaArg[prop] =  { "dataType": "Text", "direction": "out", "access": "visible" };
 
                 outArguments.push(outArg);
                 outArgumentsSchema.push(outSchemaArg);
