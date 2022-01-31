@@ -172,8 +172,7 @@ export default {
                 return;
             }
             
-            for(const arg in activity.arguments.execute.outArguments){
-                console.log(arg, Object.keys(arg));
+            for(const arg of activity.arguments.execute.outArguments){
                 if(arg && Object.keys(arg) > 0) this.outputArguments.push(Object.keys(arg)[0]);
             }
         },
