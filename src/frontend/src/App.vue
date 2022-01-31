@@ -8,6 +8,12 @@
                 <div class="column">
                     <field
                         label="Dataset"
+                        type="select"
+                        :value.sync="config.is_dataset"
+                        :options="datasets"
+                    />
+                    <field
+                        label="Dataset"
                         type="text"
                         placeholder="EG: engage"
                         :value.sync="config.is_dataset"
@@ -38,7 +44,7 @@
                         label="UserID field"
                         type="select"
                         :value.sync="config.is_identity_attribute_value"
-                        :options="['SubscriberKey', 'Email']"
+                        :options="{'{{Contact.Key}}': 'SubscriberKey', '{{InteractionDefaults.Email}}': 'Email'}"
                     />
                 </div>
             </div>
@@ -72,7 +78,7 @@ export default {
         return {
             connection: null,
             activity: null,
-
+            datasets: {},
             outputArguments: [],
 
             testUserId: "",
@@ -105,6 +111,21 @@ export default {
             console.log("INIT", this.activity);
         },
         
+        getDatasets: function(){
+            fetch('/utils/datasets', {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.datasets = data;
+            });
+        },
 
         sendTestAction: function(){
             this.ui.isTesting = true;
@@ -158,6 +179,7 @@ export default {
             }
             
             for(const arg in activity.arguments.execute.outArguments){
+                console.log(arg, Object.keys(arg));
                 if(arg && Object.keys(arg) > 0) this.outputArguments.push(Object.keys(arg)[0]);
             }
         },
@@ -247,6 +269,8 @@ export default {
     },
 
     mounted: function () {
+        this.getDatasets();
+
         this.connection = new Postmonger.Session();
 
         this.connection.on("initActivity", this.init);
