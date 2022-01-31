@@ -45,8 +45,7 @@
 
             <div class="columns">
                 <div class="column is-one-quarter">
-                    <label class="label is-small">Test configuration</label>
-                    <a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Send Action</a>
+                    <a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Validate and update Activity Output</a>
                 </div>
             </div>
         </div>
@@ -175,9 +174,7 @@ export default {
             }
             
             for(const arg of activity.arguments.execute.outArguments){
-                console.log(arg);
-                console.log(Object.keys(arg));
-                if(arg && Object.keys(arg) > 0) this.outputArguments.push(Object.keys(arg)[0]);
+                if(arg && Object.keys(arg).length > 0) this.outputArguments.push(Object.keys(arg)[0]);
             }
         },
 
@@ -269,12 +266,15 @@ export default {
         this.getDatasets();
 
         this.connection = new Postmonger.Session();
-
         this.connection.on("initActivity", this.init);
+        this.connection.trigger("ready");
+
+
+
+/*
         this.connection.on("requestedTokens", this.log);
         this.connection.on("requestEndpoints", this.log);
 
-        this.connection.trigger("ready");
         this.connection.trigger("requestTokens");
         this.connection.trigger("requestEndpoints");
 
@@ -292,12 +292,10 @@ export default {
             this.ui.currentTab = e.key;
             this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
         });
-
+        
         window.addEventListener('message', function(event) {
             console.log('Message received: ', event);
         });
-
-        /*
         connection.on('initActivity', onInitActivity);
         connection.trigger('ready');
         connection.trigger('updateActivity', activity);
