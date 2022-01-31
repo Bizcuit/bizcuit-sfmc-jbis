@@ -12,12 +12,6 @@
                         :value.sync="config.is_dataset"
                         :options="datasets"
                     />
-                    <field
-                        label="Dataset"
-                        type="text"
-                        placeholder="EG: engage"
-                        :value.sync="config.is_dataset"
-                    />
                 </div>
 
                 <div class="column">
