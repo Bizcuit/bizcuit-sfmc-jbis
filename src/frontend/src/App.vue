@@ -168,11 +168,15 @@ export default {
         },
 
         readActivityOutputArguments: function(activity){
+            console.log('readActivityOutputArguments', activity?.arguments?.execute?.outArguments);
+
             if(activity?.arguments?.execute?.outArguments === undefined){
                 return;
             }
             
             for(const arg of activity.arguments.execute.outArguments){
+                console.log(arg);
+                console.log(Object.keys(arg));
                 if(arg && Object.keys(arg) > 0) this.outputArguments.push(Object.keys(arg)[0]);
             }
         },
