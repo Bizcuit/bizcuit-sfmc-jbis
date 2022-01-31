@@ -1,63 +1,63 @@
 <template>
-	<div id="app">
-		<h3 class="is-size-6 mb-3"><strong>Configuration:</strong></h3>
+    <div id="app">
+        <h3 class="is-size-6 mb-3"><strong>Configuration:</strong></h3>
 
-		<div v-if="ui.currentTab == 'is_setup'">
-			<div class="columns">
+        <div v-if="ui.currentTab == 'is_setup'">
+            <div class="columns">
 
-				<div class="column">
-					<field
-						label="Dataset"
-						type="text"
-						placeholder="EG: engage"
-						:value.sync="config.is_dataset"
-					/>
-				</div>
+                <div class="column">
+                    <field
+                        label="Dataset"
+                        type="text"
+                        placeholder="EG: engage"
+                        :value.sync="config.is_dataset"
+                    />
+                </div>
 
-				<div class="column is-one-quarter">
-					<field
-						label="IS Action"
-						type="text"
-						placeholder="EG: JBIS_Action"
-						:value.sync="config.is_action"
-					/>
-				</div>
-			</div>
+                <div class="column is-one-quarter">
+                    <field
+                        label="IS Action"
+                        type="text"
+                        placeholder="EG: JBIS_Action"
+                        :value.sync="config.is_action"
+                    />
+                </div>
+            </div>
 
-			<div class="columns">
-				<div class="column">
-					<field
-						label="IS Identity Attribute"
-						type="text"
-						placeholder="EG: sfmcContactKey"
-						:value.sync="config.is_identity_attribute_name"
-					/>
-				</div>
-				<div class="column is-one-quarter">
-					<field
-						label="UserID field"
-						type="select"
-						:value.sync="config.is_identity_attribute_value"
-						:options="['SubscriberKey', 'Email']"
-					/>
-				</div>
-			</div>
+            <div class="columns">
+                <div class="column">
+                    <field
+                        label="IS Identity Attribute"
+                        type="text"
+                        placeholder="EG: sfmcContactKey"
+                        :value.sync="config.is_identity_attribute_name"
+                    />
+                </div>
+                <div class="column is-one-quarter">
+                    <field
+                        label="UserID field"
+                        type="select"
+                        :value.sync="config.is_identity_attribute_value"
+                        :options="['SubscriberKey', 'Email']"
+                    />
+                </div>
+            </div>
 
-			<div class="columns">
-				<div class="column is-one-quarter">
-					<label class="label is-small">Test configuration</label>
-					<a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Send Action</a>
-				</div>
-			</div>
-		</div>
+            <div class="columns">
+                <div class="column is-one-quarter">
+                    <label class="label is-small">Test configuration</label>
+                    <a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Send Action</a>
+                </div>
+            </div>
+        </div>
 
-		<h3 class="is-size-6 mt-5"><strong>Output substitution strings:</strong></h3>
+        <h3 class="is-size-6 mt-5"><strong>Output substitution strings:</strong></h3>
 
-		<div class="tags mt-3">
+        <div class="tags mt-3">
             <span class="tag is-link" v-for="arg in outArguments" :key="arg">Interaction.{{activity ? activity.key : ''}}.{{arg}}</span>
-		</div>
+        </div>
 
-	</div>
+    </div>
 </template>
 
 <script>
@@ -66,99 +66,99 @@ import Postmonger from "postmonger";
 import Field from "./components/Field.vue";
 
 export default {
-	name: "App",
+    name: "App",
 
-	data: () => {
-		return {
-			connection: null,
-			activity: null,
+    data: () => {
+        return {
+            connection: null,
+            activity: null,
 
             outputArguments: [],
 
-			testUserId: "",
+            testUserId: "",
 
-			config: {
-				is_dataset: "",
-				is_action: "",
+            config: {
+                is_dataset: "",
+                is_action: "",
                 is_identity_attribute_name: "",
                 is_identity_attribute_value: "",
-			},
+            },
 
-			ui: {
-				currentTab: "is_setup",
-				currentTabIndex: 0,
-				isTesting: false,
+            ui: {
+                currentTab: "is_setup",
+                currentTabIndex: 0,
+                isTesting: false,
 
-				steps: [
-					{ label: "IS Setup", key: "is_setup", active: false }
-				],
-			},
-		};
-	},
+                steps: [
+                    { label: "IS Setup", key: "is_setup", active: false }
+                ],
+            },
+        };
+    },
 
-	methods: {
-		init: function (activity) {
-			this.activity = activity;
-			this.getArgumentValues(activity);
+    methods: {
+        init: function (activity) {
+            this.activity = activity;
+            this.getArgumentValues(activity);
             this.readActivityOutputArguments(activity);
 
-			console.log("INIT", this.activity);
-		},
-		
+            console.log("INIT", this.activity);
+        },
+        
 
-		sendTestAction: function(){
-			this.ui.isTesting = true;
-			let userId = window.prompt('Which UserId (SubscriberKey / EmailAddress) would you like to use for this test? Click "Cancel" to use default values', 'test_jbis@test.test');
+        sendTestAction: function(){
+            this.ui.isTesting = true;
+            let userId = window.prompt('Which UserId (SubscriberKey / EmailAddress) would you like to use for this test? Click "Cancel" to use default values', 'test_jbis@test.test');
 
-			fetch('/actions/execute', {
-				method: 'POST',
-				mode: 'cors',
-				cache: 'no-cache',
-				credentials: 'same-origin',
-				headers: { 'Content-Type': 'application/json' },
-				redirect: 'follow',
-				referrerPolicy: 'no-referrer',
-				body: JSON.stringify({
-					inArguments: [
-						{ is_dataset: this.config.is_dataset },
-						{ is_action: this.config.is_action },
+            fetch('/actions/execute', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify({
+                    inArguments: [
+                        { is_dataset: this.config.is_dataset },
+                        { is_action: this.config.is_action },
                         { is_identity_attribute_name: this.config.is_identity_attribute_name },
                         { is_identity_attribute_value: userId || "test_jbis@test.test" }
-					]
-				})
-			})
-			.then(response => response.json())
+                    ]
+                })
+            })
+            .then(response => response.json())
             .then(data => {
                 this.updateActivityOutputArguments(data);
 
                 return data;
             })
-			.then(data => {
-				let message = "Status - " + data.__status;
+            .then(data => {
+                let message = "Status - " + data.__status;
 
-				for(let prop in data){
-					if(prop !== "__status" && data[prop]){
-						message += '\n===============\n' + prop + " = " + data[prop];
-					}
-				}
-				alert(message.trim());
+                for(let prop in data){
+                    if(prop !== "__status" && data[prop]){
+                        message += '\n===============\n' + prop + " = " + data[prop];
+                    }
+                }
+                alert(message.trim());
 
-			})
-			.catch(err => {
-				alert('ERROR: ' + err.message);
-			})
-			.finally(() => {
-				this.ui.isTesting = false;
-			});
-		},
+            })
+            .catch(err => {
+                alert('ERROR: ' + err.message);
+            })
+            .finally(() => {
+                this.ui.isTesting = false;
+            });
+        },
 
         readActivityOutputArguments: function(activity){
             if(activity?.arguments?.execute?.outArguments === undefined){
                 return;
             }
             
-            for(const arg of Object.keys(activity.arguments.execute.outArguments)){
-                this.outputArguments.push(arg);
+            for(const arg in activity.arguments.execute.outArguments){
+                if(arg && Object.keys(arg) > 0) this.outputArguments.push(Object.keys(arg)[0]);
             }
         },
 
@@ -172,8 +172,6 @@ export default {
 
             this.outputArguments = [];
 
-            console.log(JSON.stringify(this.activity, null, 2));
-
             for(let prop in campaignResponseData){
                 const outArg = {};
                 const outSchemaArg = {}
@@ -185,144 +183,144 @@ export default {
                 outArgumentsSchema.push(outSchemaArg);
                 this.outputArguments.push(prop);
             }
-
-            console.log(JSON.stringify(this.activity, null, 2));
         },
 
-		saveAndClose: function () {
-			if (this?.activity?.metaData === undefined) {
-				return;
-			}
+        saveAndClose: function () {
+            if (this?.activity?.metaData === undefined) {
+                return;
+            }
 
-			this.setArgumentValues();
-			this.activity.metaData.isConfigured = true;
-			this.connection.trigger("updateActivity", this.activity);
-			this.connection.trigger("requestInspectorClose");
-		},
+            this.setArgumentValues();
+            this.activity.metaData.isConfigured = true;
+            this.connection.trigger("updateActivity", this.activity);
 
-		getArgumentValues: function (activity) {
-			if (activity?.arguments?.execute?.inArguments === undefined) {
-				return;
-			}
+            console.log("ACTIVITY: \n" + JSON.stringify(this.activity, null, 2));
+            this.connection.trigger("requestInspectorClose");
+        },
 
-			for (let a of activity?.arguments?.execute?.inArguments) {
-				for (let prop in a) {
-					if (this.config[prop] !== undefined) {
-						this.config[prop] = a[prop];
-					}
-				}
-			}
-		},
+        getArgumentValues: function (activity) {
+            if (activity?.arguments?.execute?.inArguments === undefined) {
+                return;
+            }
 
-		setArgumentValues: function () {
-			if (this?.activity?.arguments?.execute?.inArguments === undefined) {
-				return;
-			}
+            for (let a of activity?.arguments?.execute?.inArguments) {
+                for (let prop in a) {
+                    if (this.config[prop] !== undefined) {
+                        this.config[prop] = a[prop];
+                    }
+                }
+            }
+        },
 
-			for (let a of this?.activity?.arguments?.execute?.inArguments) {
-				for (let prop in a) {
-					if (this.config[prop] !== undefined) {
-						a[prop] = this.config[prop];
-					}
-				}
-			}
-		},
+        setArgumentValues: function () {
+            if (this?.activity?.arguments?.execute?.inArguments === undefined) {
+                return;
+            }
 
-		toggleCurrentTab: function (offset) {
-			this.ui.currentTabIndex += offset;
-			
-			if(this.ui.currentTabIndex < 0) {
-				this.ui.currentTabIndex = 0;
-			}
+            for (let a of this?.activity?.arguments?.execute?.inArguments) {
+                for (let prop in a) {
+                    if (this.config[prop] !== undefined) {
+                        a[prop] = this.config[prop];
+                    }
+                }
+            }
+        },
 
-			if(this.ui.currentTabIndex >= this.ui.steps.length){
-				this.saveAndClose();
-				return;
-			}
+        toggleCurrentTab: function (offset) {
+            this.ui.currentTabIndex += offset;
+            
+            if(this.ui.currentTabIndex < 0) {
+                this.ui.currentTabIndex = 0;
+            }
 
-			this.ui.currentTab = this.ui.steps[this.ui.currentTabIndex].key;
-		},
+            if(this.ui.currentTabIndex >= this.ui.steps.length){
+                this.saveAndClose();
+                return;
+            }
 
-		log: function (data) {
-			console.log("LOG", data);
-		},
-	},
+            this.ui.currentTab = this.ui.steps[this.ui.currentTabIndex].key;
+        },
 
-	mounted: function () {
-		this.connection = new Postmonger.Session();
+        log: function (data) {
+            console.log("LOG", data);
+        },
+    },
 
-		this.connection.on("initActivity", this.init);
-		this.connection.on("requestedTokens", this.log);
-		this.connection.on("requestEndpoints", this.log);
+    mounted: function () {
+        this.connection = new Postmonger.Session();
 
-		this.connection.trigger("ready");
-		this.connection.trigger("requestTokens");
-		this.connection.trigger("requestEndpoints");
+        this.connection.on("initActivity", this.init);
+        this.connection.on("requestedTokens", this.log);
+        this.connection.on("requestEndpoints", this.log);
 
-		this.connection.on("clickedNext", () => {
-			this.toggleCurrentTab(1);
-			this.connection.trigger("nextStep");
-		});
+        this.connection.trigger("ready");
+        this.connection.trigger("requestTokens");
+        this.connection.trigger("requestEndpoints");
 
-		this.connection.on("clickedBack", () => {
-			this.toggleCurrentTab(-1);
-			this.connection.trigger("prevStep");
-		});
+        this.connection.on("clickedNext", () => {
+            this.toggleCurrentTab(1);
+            this.connection.trigger("nextStep");
+        });
 
-		this.connection.on("gotoStep", (e) => {
-			this.ui.currentTab = e.key;
-			this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
-		});
+        this.connection.on("clickedBack", () => {
+            this.toggleCurrentTab(-1);
+            this.connection.trigger("prevStep");
+        });
 
-		window.addEventListener('message', function(event) {
-			console.log('Message received: ', event);
-		});
+        this.connection.on("gotoStep", (e) => {
+            this.ui.currentTab = e.key;
+            this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
+        });
 
-		/*
-		connection.on('initActivity', onInitActivity);
-		connection.trigger('ready');
-		connection.trigger('updateActivity', activity);
-		connection.trigger('setActivityDirtyState', false);
-		connection.trigger('requestInspectorClose');
-		connection.on("requestedTokens", onGetTokens);
-		connection.on("requestedEndpoints", onGetEndpoints);
+        window.addEventListener('message', function(event) {
+            console.log('Message received: ', event);
+        });
 
-		connection.on("clickedNext", onClickedNext);
-		connection.on("clickedBack", onClickedBack);
-		connection.on("gotoStep", onGotoStep);
-		connection.trigger("ready");
+        /*
+        connection.on('initActivity', onInitActivity);
+        connection.trigger('ready');
+        connection.trigger('updateActivity', activity);
+        connection.trigger('setActivityDirtyState', false);
+        connection.trigger('requestInspectorClose');
+        connection.on("requestedTokens", onGetTokens);
+        connection.on("requestedEndpoints", onGetEndpoints);
 
-		connection.trigger("requestTokens");
-		connection.trigger("requestEndpoints");
-		connection.trigger("updateButton", {
-			button: "next",
-			enabled: Boolean(message),
-		});
-		connection.trigger("updateSteps", steps);
+        connection.on("clickedNext", onClickedNext);
+        connection.on("clickedBack", onClickedBack);
+        connection.on("gotoStep", onGotoStep);
+        connection.trigger("ready");
 
-		{{Contact.Key}}
-		*/
-	},
+        connection.trigger("requestTokens");
+        connection.trigger("requestEndpoints");
+        connection.trigger("updateButton", {
+            button: "next",
+            enabled: Boolean(message),
+        });
+        connection.trigger("updateSteps", steps);
 
-	components: {
-		Field,
-	},
+        {{Contact.Key}}
+        */
+    },
+
+    components: {
+        Field,
+    },
 };
 </script>
 
 <style>
 #app {
-	padding: 10px;
-	margin: 0px auto;
-	max-width: 800px;
+    padding: 10px;
+    margin: 0px auto;
+    max-width: 800px;
 }
 h5 {
-	padding: 10px 0px 5px 0px;
-	margin: 0px;
+    padding: 10px 0px 5px 0px;
+    margin: 0px;
 }
 input {
-	width: 100%;
-	padding: 3px;
-	box-sizing: border-box;
+    width: 100%;
+    padding: 3px;
+    box-sizing: border-box;
 }
 </style>
