@@ -1,5 +1,16 @@
 {
 	"name": "JBIS: MC Journey Builder Custom Activity for Interaction Studio",
 	"description": "In a nutshell, this activity allows you to receive segment membership and recommendations (and other information) from IS and use this information in your Journey. For example for smart real-time decision splits or anything else.",
-	"repository": "https://github.com/Bizcuit/bizcuit-sfmc-jbis"
+	"repository": "https://github.com/Bizcuit/bizcuit-sfmc-jbis",
+    "env": {
+        "IS_API_BASEURL": {
+            "description": "Base URL of your Interaction Studio EventAPI endpoint. EG: https://test.germany-2.evergage.com"
+        },
+        "IS_API_KEY": {
+            "description": "Your Interaction Studio API Key"
+        },
+        "IS_API_SECRET": {
+            "description": "Your Interaction Studio API Secret"
+        }
+    }
 }
