@@ -9,7 +9,7 @@
                     <field
                         label="Dataset"
                         type="select"
-                        :value.sync="config.is_dataset"
+                        v-model="config.is_dataset"
                         :options="datasets"
                     />
                 </div>
@@ -19,7 +19,7 @@
                         label="IS Action"
                         type="text"
                         placeholder="EG: JBIS_Action"
-                        :value.sync="config.is_action"
+                        v-model="config.is_action"
                     />
                 </div>
             </div>
@@ -30,14 +30,14 @@
                         label="IS Identity Attribute"
                         type="text"
                         placeholder="EG: sfmcContactKey"
-                        :value.sync="config.is_identity_attribute_name"
+                        v-model="config.is_identity_attribute_name"
                     />
                 </div>
                 <div class="column">
                     <field
                         label="UserID field"
                         type="select"
-                        :value.sync="config.is_identity_attribute_value"
+                        v-model="config.is_identity_attribute_value"
                         :options="{'{{Contact.Key}}': 'SubscriberKey', '{{InteractionDefaults.Email}}': 'Email'}"
                     />
                 </div>
