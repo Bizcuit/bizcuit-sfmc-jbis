@@ -153,17 +153,6 @@ export default {
                 this.testData = data;
                 return data;
             })
-            .then(data => {
-                let message = "Status - " + data.__status;
-
-                for(let prop in data){
-                    if(prop !== "__status" && data[prop]){
-                        message += '\n===============\n' + prop + " = " + data[prop];
-                    }
-                }
-                alert(message.trim());
-
-            })
             .catch(err => {
                 alert('ERROR: ' + err.message);
             })

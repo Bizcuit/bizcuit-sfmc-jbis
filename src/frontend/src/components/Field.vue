@@ -3,8 +3,8 @@
         <label v-if="label" class="label is-small">{{ label }}</label>
         <div class="control">
             <div class="select is-small is-fullwidth" v-if="type == 'select'">
-                <select @change="$emit('input', $event.target.value)">
-                    <option v-for="(v, k) in options" :key="k" :value="k" :selected="k == value">{{ v }}</option>
+                <select @change="$emit('update:modelValue', $event.target.value)">
+                    <option v-for="(v, k) in options" :key="k" :value="k" :selected="k == modelValue">{{ v }}</option>
                 </select>
             </div>
 
@@ -13,8 +13,8 @@
                 class="input is-small"
                 type="password"
                 :placeholder="placeholder"
-                v-bind:value="value"
-                @change="$emit('input', $event.target.value)"
+                v-bind:value="modelValue"
+                v-on:input="$emit('update:modelValue', $event.target.value)"
             />
 
             <input
@@ -22,8 +22,8 @@
                 class="input is-small"
                 type="text"
                 :placeholder="placeholder"
-                v-bind:value="value"
-                @change="$emit('input', $event.target.value)"
+                v-bind:value="modelValue"
+                v-on:input="$emit('update:modelValue', $event.target.value)"
             />
         </div>
     </div>
@@ -35,7 +35,7 @@ export default {
     props: {
         label: String,
         placeholder: String,
-        value: String,
+        modelValue: String,
         type: String,
         options: Array
     }
