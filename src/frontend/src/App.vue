@@ -44,16 +44,21 @@
             </div>
 
             <div class="columns">
-                <div class="column is-one-quarter">
-                    <a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Validate and update Activity Output</a>
+                <div class="column is-half">
+                    <a :class="[ui.isTesting ? 'is-loading' : '', 'button is-info is-small is-fullwidth']" @click="sendTestAction()">Validate Activity and update Output Parameters</a>
                 </div>
             </div>
         </div>
 
-        <h3 class="is-size-6 mt-5"><strong>Output substitution strings:</strong></h3>
+        <h3 class="is-size-6 mt-5 mb-5"><strong>Activity Output:</strong></h3>
 
-        <div class="tags mt-3">
-            <span class="tag is-link" v-for="arg in outputArguments" :key="arg">Interaction.{{activity ? activity.key : ''}}.{{arg}}</span>
+        <div class="columns" v-for="arg in outputArguments" :key="arg">
+            <div class="column">
+                <span class="tag is-link" v-html="'{{Interaction.' + (activity?.key || '') + '.' + arg + '}}'"></span>
+            </div>
+            <div class="column">
+                <span class="tag is-link is-light">{{testData[arg] || "NO VALUE"}}</span>
+            </div>
         </div>
 
     </div>
@@ -74,6 +79,7 @@ export default {
             datasets: {},
             outputArguments: [],
 
+            testData: {},
             testUserId: "",
 
             config: {
@@ -144,7 +150,7 @@ export default {
             .then(response => response.json())
             .then(data => {
                 this.updateActivityOutputArguments(data);
-
+                this.testData = data;
                 return data;
             })
             .then(data => {
