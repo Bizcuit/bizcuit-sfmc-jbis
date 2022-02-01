@@ -5,7 +5,8 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-		"build": "tsc && cd 'src/frontend' && npm install && npm run build",
+		"build_old": "tsc && cd 'src/frontend' && npm install && npm run build",
+        "build": "tsc",
 		"prestart": "tsc",
 		"start": "node .",
 		"test": "echo \"Error: no test specified\" && exit 1"
