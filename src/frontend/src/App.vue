@@ -52,11 +52,11 @@
 
         <h3 class="is-size-6 mt-5 mb-5"><strong>Activity Output:</strong></h3>
 
-        <div class="columns" v-for="arg in outputArguments" :key="arg">
-            <div class="column">
-                <span class="tag is-link" v-html="'{{Interaction.' + (activity?.key || '') + '.' + arg + '}}'"></span>
-            </div>
-            <div class="column">
+
+        <div class="tile is-ancestor">
+            <div class="tile is-4" v-for="arg in outputArguments" :key="arg">
+                <span class="tag is-link" v-html="'{{Interaction.' + (activity?.key || '') + '.' + arg + '}}'"></span> 
+                <span class="tag is-light">=</span>
                 <span class="tag is-link is-light">{{testData[arg] || "NO VALUE"}}</span>
             </div>
         </div>
