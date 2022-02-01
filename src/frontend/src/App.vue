@@ -53,8 +53,8 @@
         <h3 class="is-size-6 mt-5 mb-5"><strong>Activity Output:</strong></h3>
 
 
-        <div class="tile is-ancestor">
-            <div class="tile is-4" v-for="arg in outputArguments" :key="arg">
+        <div class="tile is-ancestor is-flex is-flex-wrap-wrap">
+            <div class="tile is-6 mb-4" v-for="arg in outputArguments" :key="arg">
                 <span class="tag is-link" v-html="'{{Interaction.' + (activity?.key || '') + '.' + arg + '}}'"></span> 
                 <span class="tag is-light">=</span>
                 <span class="tag is-link is-light">{{testData[arg] || "NO VALUE"}}</span>
