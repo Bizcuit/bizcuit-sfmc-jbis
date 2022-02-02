@@ -253,7 +253,7 @@ export default {
         },
 
         log: function (data) {
-            console.log("LOG", data);
+            console.log("LOG", JSON.stringify(data, null, 2));
         },
     },
 
@@ -261,15 +261,21 @@ export default {
         this.getDatasets();
 
         this.connection = new Postmonger.Session();
+        
         this.connection.on("initActivity", this.init);
         this.connection.trigger("ready");
 
+        this.connection.on("requestedTokens", this.log);
+        this.connection.trigger("requestTokens");
+
         this.connection.on("clickedNext", () => {
+            console.log("clickedNext");
             this.toggleCurrentTab(1);
             this.connection.trigger("nextStep");
         });
 
         this.connection.on("gotoStep", (e) => {
+            console.log("gotoStep");
             this.ui.currentTab = e.key;
             this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
         });
