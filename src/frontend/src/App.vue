@@ -106,8 +106,6 @@ export default {
             this.activity = activity;
             this.getArgumentValues(activity);
             this.readActivityOutputArguments(activity);
-
-            console.log("INIT", this.activity);
         },
         
         getDatasets: function(){
@@ -162,8 +160,6 @@ export default {
         },
 
         readActivityOutputArguments: function(activity){
-            console.log('readActivityOutputArguments', activity?.arguments?.execute?.outArguments);
-
             if(activity?.arguments?.execute?.outArguments === undefined){
                 return;
             }
