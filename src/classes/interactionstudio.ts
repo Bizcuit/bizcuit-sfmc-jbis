@@ -61,6 +61,7 @@ export default class InteractionStudio {
 
         try {
             const eventApiResponse = await axios(request)
+            Utils.log("request", JSON.stringify(eventApiResponse, null, 2))
             result = this.parseEventApiResponse(eventApiResponse?.data)
         }
         catch (err: any) {
