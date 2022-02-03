@@ -7,6 +7,8 @@ export default class JourneyBuilderActivityConfig {
     public static getFromRequest(request: any): JourneyBuilderActivityConfig {
         const result = new JourneyBuilderActivityConfig();
 
+        console.log(JSON.stringify(request));
+
         request?.inArguments?.forEach((a: any) => {
             for (const p of Object.keys(a)) {
                 if (p === 'is_dataset') result.dataset = a[p];

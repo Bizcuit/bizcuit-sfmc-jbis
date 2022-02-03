@@ -38,6 +38,7 @@ class ConfigController {
 						{ "is_dataset": "" }
 					],
 					"outArguments": [],
+                    "useJwt": true,
 					"url": `https://${host}/actions/execute`
 				}
 			},

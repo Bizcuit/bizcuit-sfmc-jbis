@@ -18,8 +18,7 @@ export default class InteractionStudio {
         this.apiKey = process.env.IS_API_KEY               || "__IS_API_KEY"
         this.apiSecret = process.env.IS_API_SECRET         || "__IS_API_SECRET"
 
-        const tokenBuffer = Buffer.from(this.apiKey + ":" + this.apiSecret, "utf8");
-        this.apiToken = tokenBuffer.toString("base64")
+        this.apiToken = Buffer.from(this.apiKey + ":" + this.apiSecret, "utf8").toString("base64");
     }
 
     public async callDatasetApi(): Promise<KeyValuePairs>{
@@ -85,8 +84,6 @@ export default class InteractionStudio {
 
         payload.user.attributes[jbConfig.identityAttributeName] = jbConfig.identityAttributeValue
 
-        console.log(JSON.stringify(payload))
-
         return payload
     }
 
@@ -95,7 +92,7 @@ export default class InteractionStudio {
         let isCampaignFound = false
 
         eventApiResponseBody?.campaignResponses?.forEach((campaignResponse: any) => {
-            console.log(JSON.stringify(campaignResponse?.payload?.jbis));
+            //console.log(JSON.stringify(campaignResponse?.payload?.jbis));
             if(campaignResponse?.payload?.jbis !== undefined){
                 for(const prop of Object.keys(campaignResponse.payload.jbis)){
                     result[prop] = campaignResponse.payload.jbis[prop]

@@ -265,65 +265,8 @@ export default {
         this.connection.trigger("requestTokens");
 
         this.connection.on("clickedNext", () => {
-            console.log("clickedNext");
-            this.toggleCurrentTab(1);
-            this.connection.trigger("nextStep");
+            this.saveAndClose();
         });
-
-        this.connection.on("gotoStep", (e) => {
-            console.log("gotoStep");
-            this.ui.currentTab = e.key;
-            this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
-        });
-
-/*
-        this.connection.on("requestedTokens", this.log);
-        this.connection.on("requestEndpoints", this.log);
-
-        this.connection.trigger("requestTokens");
-        this.connection.trigger("requestEndpoints");
-
-        this.connection.on("clickedNext", () => {
-            this.toggleCurrentTab(1);
-            this.connection.trigger("nextStep");
-        });
-
-        this.connection.on("clickedBack", () => {
-            this.toggleCurrentTab(-1);
-            this.connection.trigger("prevStep");
-        });
-
-        this.connection.on("gotoStep", (e) => {
-            this.ui.currentTab = e.key;
-            this.ui.currentTabIndex = this.ui.steps.findIndex(s => s.key == e.key);
-        });
-        
-        window.addEventListener('message', function(event) {
-            console.log('Message received: ', event);
-        });
-        connection.on('initActivity', onInitActivity);
-        connection.trigger('ready');
-        connection.trigger('updateActivity', activity);
-        connection.trigger('setActivityDirtyState', false);
-        connection.trigger('requestInspectorClose');
-        connection.on("requestedTokens", onGetTokens);
-        connection.on("requestedEndpoints", onGetEndpoints);
-
-        connection.on("clickedNext", onClickedNext);
-        connection.on("clickedBack", onClickedBack);
-        connection.on("gotoStep", onGotoStep);
-        connection.trigger("ready");
-
-        connection.trigger("requestTokens");
-        connection.trigger("requestEndpoints");
-        connection.trigger("updateButton", {
-            button: "next",
-            enabled: Boolean(message),
-        });
-        connection.trigger("updateSteps", steps);
-
-        {{Contact.Key}}
-        */
     },
 
     components: {
