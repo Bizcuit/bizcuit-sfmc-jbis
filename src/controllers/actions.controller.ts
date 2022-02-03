@@ -37,7 +37,10 @@ class ActionsController {
     }
 
     public async execute(req: Request, res: Response) {
-        Utils.log('EXECUTE', req.body)
+        Utils.log('EXECUTE - body', req.body)
+        Utils.log('EXECUTE - params', req.params)
+        Utils.log('EXECUTE - query', req.query)
+
 
         const jbConfig = JourneyBuilderActivityConfig.getFromRequest(req.body)
         const is = new InteractionStudio()
