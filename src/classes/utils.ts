@@ -30,7 +30,7 @@ export default class Utils {
 
         try {
             const response = await axios(request)
-
+            Utils.log(`"${response?.data?.enterprise?.id}" (${typeof response?.data?.enterprise?.id}) === "${process.env.MC_EID} (${typeof process.env.MC_EID})"`,response?.data?.enterprise?.id === process.env.MC_EID);
             return response?.data?.enterprise?.id === process.env.MC_EID
         }
         catch(err: any){
