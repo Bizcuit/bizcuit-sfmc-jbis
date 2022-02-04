@@ -13,7 +13,7 @@ class UtilsController {
     }
 
     public async test(req: Request, res: Response){
-        
+        res.json({})
     }
 
 	public async getDatasets(req: Request, res: Response) {
