@@ -137,7 +137,7 @@ export default {
             this.ui.isTesting = true;
             let userId = window.prompt('Which UserId (SubscriberKey / EmailAddress) would you like to use for this test? Click "Cancel" to use default values', 'test_jbis@test.test');
 
-            fetch('/actions/execute', {
+            fetch('/utils/test', {
                 method: 'POST',
                 mode: 'cors',
                 cache: 'no-cache',

@@ -4,7 +4,7 @@ import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export default class Utils {
 	public static log(message: string, data: any) {
-		console.log(message, data)
+		console.log(message + "\n", data)
 	}
 
     public static getRequestBody(request: Request){
@@ -19,6 +19,8 @@ export default class Utils {
         const token = data?.token?.fuel2token
         const endpoint = data?.endpoints?.fuelapiRestHost + "platform/v1/tokenContext"
 
+        if(!token || !endpoint) return false
+
         const request: AxiosRequestConfig = {
             method: 'GET',
             url: endpoint,
@@ -30,11 +32,10 @@ export default class Utils {
 
         try {
             const response = await axios(request)
-            Utils.log(`"${response?.data?.enterprise?.id}" (${typeof response?.data?.enterprise?.id}) === "${process.env.MC_EID} (${typeof process.env.MC_EID})"`,response?.data?.enterprise?.id === process.env.MC_EID);
-            return response?.data?.enterprise?.id === process.env.MC_EID
+            return response?.data?.enterprise?.id?.toString() === process.env.MC_EID?.toString()
         }
         catch(err: any){
-            Utils.log("ERROR: Tenant validation failed.", err?.message)
+            Utils.log("ERROR: Tenant validation failed", err?.message)
         }
 
         return false;
