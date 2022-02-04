@@ -1,6 +1,5 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
-import Utils from '../classes/utils'
 import InteractionStudio from '../classes/interactionstudio'
 import JourneyBuilderActivityConfig from '../classes/journeybuilderactivityconfig'
 
@@ -17,37 +16,27 @@ class ActionsController {
     }
 
     public save(req: Request, res: Response) {
-        // Utils.log('SAVE', req.body)
         res.json({ result: "success" })
     }
 
     public publish(req: Request, res: Response) {
-        // Utils.log('PUBLISH', req.body)
         res.json({ result: "success" })
     }
 
     public validate(req: Request, res: Response) {
-        // Utils.log('VALIDATE', req.body)
         res.json({ result: "success" })
     }
 
     public stop(req: Request, res: Response) {
-        // Utils.log('STOP', req.body)
         res.json({ result: "success" })
     }
 
     public async execute(req: Request, res: Response) {
         const p13n = new InteractionStudio()
         const config = JourneyBuilderActivityConfig.getFromRequest(req)
+        const result = await p13n.callEventApi(config.dataset, p13n.getEventApiPayload(config))
 
-        if(config.isEmpty()){
-            Utils.log("ERROR: Empty request", req.body);
-            return res.end("");
-        }
-
-        const response = await p13n.callEventApi(config.dataset, p13n.getEventApiPayload(config))
-
-        return res.status(200).json(response)
+        return res.status(200).json(result)
     }
 }
 

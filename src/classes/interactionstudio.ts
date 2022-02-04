@@ -18,7 +18,7 @@ export default class InteractionStudio {
         this.apiKey = process.env.IS_API_KEY               || "__IS_API_KEY"
         this.apiSecret = process.env.IS_API_SECRET         || "__IS_API_SECRET"
 
-        this.apiToken = Buffer.from(this.apiKey + ":" + this.apiSecret, "utf8").toString("base64");
+        this.apiToken = Buffer.from(this.apiKey + ":" + this.apiSecret, "utf8").toString("base64")
     }
 
     public async callDatasetApi(): Promise<KeyValuePairs>{
@@ -46,20 +46,19 @@ export default class InteractionStudio {
 
     public async callEventApi(dataset: string, payload: any): Promise<KeyValuePairs> {
         let result = new KeyValuePairs()
-
-        result[this.statusPropertyName] = "OK"
-
-        const request: AxiosRequestConfig = {
-            method: 'POST',
-            url: `${this.apiBaseUrl}/api2/authevent/${dataset}`,
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Basic ${this.apiToken}`
-            },
-            data: payload
-        }
-
         try {
+            if(!payload) throw new Error("Empty or incorrect Journey Builder payload received")
+
+            const request: AxiosRequestConfig = {
+                method: 'POST',
+                url: `${this.apiBaseUrl}/api2/authevent/${dataset}`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Basic ${this.apiToken}`
+                },
+                data: payload
+            }
+
             const eventApiResponse = await axios(request)
             result = this.parseEventApiResponse(eventApiResponse?.data)
         }
@@ -70,9 +69,11 @@ export default class InteractionStudio {
         return result;
     }
 
-    public getEventApiPayload(jbConfig: JourneyBuilderActivityConfig): any {
+    public getEventApiPayload(config: JourneyBuilderActivityConfig): any {
+        if(config.isEmpty()) return null
+
         const payload: any = {
-            "action": jbConfig.action,
+            "action": config.action,
             "source": {
                 "channel": "Server",
                 "application": "JBIS"
@@ -82,7 +83,7 @@ export default class InteractionStudio {
             }
         }
 
-        payload.user.attributes[jbConfig.identityAttributeName] = jbConfig.identityAttributeValue
+        payload.user.attributes[config.identityAttributeName] = config.identityAttributeValue
 
         return payload
     }

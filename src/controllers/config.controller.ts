@@ -6,7 +6,7 @@ class ConfigController {
 	public router = express.Router()
 
 	constructor() {
-		this.router.all('*', this.config);
+		this.router.all('*', this.config)
 	}
 
 	public home(req: Request, res: Response) {
@@ -14,7 +14,7 @@ class ConfigController {
 	}
 
 	public config(req: Request, res: Response) {
-		const host: string = req.headers.host || 'localhost';
+		const host: string = req.headers.host || 'localhost'
 
 		res.json({
 			"workflowApiVersion": "1.1",

@@ -15,7 +15,7 @@ class UtilsController {
     }
 
     public async test(req: Request, res: Response){
-        let result: KeyValuePairs = {};
+        let result = new KeyValuePairs()
         const isValidated = await Utils.validateTenant(req.body)
 
         if(isValidated){
@@ -28,7 +28,7 @@ class UtilsController {
     }
 
 	public async getDatasets(req: Request, res: Response) {
-        let result: any = {};
+        let result = new KeyValuePairs()
         const isValidated = await Utils.validateTenant(req.body)
 
         if(isValidated){

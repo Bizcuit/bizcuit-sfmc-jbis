@@ -1,5 +1,6 @@
 import express from 'express'
 import { Application } from 'express'
+import Utils from './classes/utils'
 
 class App {
 	public app: Application
@@ -38,10 +39,9 @@ class App {
 
 	public listen() {
 		this.app.listen(this.port, () => {
-			// tslint:disable-next-line:no-console
-			console.log(`App listening on the http://localhost:${this.port}`)
+			Utils.log(`App listening on the http://localhost:${this.port}`, '')
 		})
 	}
 }
 
-export default App;
+export default App

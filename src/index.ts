@@ -20,6 +20,6 @@ const app = new App({
 		bodyParser.urlencoded({ extended: true }),
         bodyParser.text({type: 'application/jwt'})
 	]
-});
+})
 
 app.listen()
