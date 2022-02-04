@@ -7,7 +7,7 @@ export default class Utils {
 	}
 
     public static getRequestBody(request: Request){
-        if(request.headers["content-type"] == "application/jwt"){
+        if(request.headers["content-type"] === "application/jwt"){
             return verify(request.body, process.env.MC_JWT_SECRET || "")
         }
 

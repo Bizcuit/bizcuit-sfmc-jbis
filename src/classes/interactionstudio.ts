@@ -92,7 +92,7 @@ export default class InteractionStudio {
         let isCampaignFound = false
 
         eventApiResponseBody?.campaignResponses?.forEach((campaignResponse: any) => {
-            //console.log(JSON.stringify(campaignResponse?.payload?.jbis));
+            // console.log(JSON.stringify(campaignResponse?.payload?.jbis));
             if(campaignResponse?.payload?.jbis !== undefined){
                 for(const prop of Object.keys(campaignResponse.payload.jbis)){
                     result[prop] = campaignResponse.payload.jbis[prop]

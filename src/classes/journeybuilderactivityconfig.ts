@@ -12,7 +12,7 @@ export default class JourneyBuilderActivityConfig {
 
         try{
             const data: any = Utils.getRequestBody(request)
-    
+
             data?.inArguments?.forEach((a: any) => {
                 for (const p of Object.keys(a)) {
                     if (p === 'is_dataset') result.dataset = a[p]
