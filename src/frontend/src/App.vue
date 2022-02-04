@@ -77,6 +77,7 @@ export default {
             connection: null,
             activity: null,
             token: null,
+            endpoints: null,
 
             datasets: {},
             outputArguments: [],
@@ -111,7 +112,7 @@ export default {
         },
         
         getDatasets: function(){
-            this.getToken().then(() => {
+            this.waitForTokenAndEndpoints().then(() => {
                 fetch('/utils/datasets', {
                     method: 'POST',
                     mode: 'cors',
@@ -120,7 +121,10 @@ export default {
                     headers: { 'Content-Type': 'application/json' },
                     redirect: 'follow',
                     referrerPolicy: 'no-referrer',
-                    body: JSON.stringify(this.token)
+                    body: JSON.stringify({
+                        token: this.token,
+                        endpoints: this.endpoints
+                    })
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -241,7 +245,7 @@ export default {
             console.log("LOG", JSON.stringify(data, null, 2));
         },
 
-        getToken: function(){
+        waitForTokenAndEndpoints: function(){
             return new Promise((resolve) => {
                 const now = new Date().getTime();
 
@@ -252,11 +256,11 @@ export default {
                     this.token = null;
 
                     this.connection.trigger("requestTokens");
+                    this.connection.trigger("requestEndpoints");
                     
                     const getTokenInterval = setInterval(() => {
-                        if(this.token){
+                        if(this.token && this.endpoints){
                             clearInterval(getTokenInterval);
-                            this.log(this.token);
                             resolve(this.token);
                         }
                     }, 100);
@@ -271,14 +275,7 @@ export default {
         
         this.connection.on("initActivity", this.init);
         this.connection.on("requestedTokens", (data) => { this.token = data; });
-        
-        this.connection.on("requestedEndpoints", this.log);
-        this.connection.trigger("requestEndpoints");
-
-        //requestedDataSources
-        //requestedInteraction
-        //registerAllowedOriginResponse
-        
+        this.connection.on("requestedEndpoints", (data) => { this.endpoints = data; });
         this.connection.on("clickedNext", () => { this.saveAndClose(); });
 
         this.getDatasets();
