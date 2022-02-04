@@ -38,12 +38,8 @@ class ActionsController {
 
     public async execute(req: Request, res: Response) {
         Utils.log('EXECUTE - body', req.body)
-        Utils.log('EXECUTE - params', req.params)
-        Utils.log('EXECUTE - query', req.query)
 
-        Utils.log('EXECUTE - req?.headers', req?.headers?.["content-type"])
-
-        const jbConfig = JourneyBuilderActivityConfig.getFromRequest(req.body)
+        const jbConfig = JourneyBuilderActivityConfig.getFromRequest(req)
         const is = new InteractionStudio()
         const isResponse = await is.callEventApi(jbConfig, is.getEventApiPayload(jbConfig))
 
