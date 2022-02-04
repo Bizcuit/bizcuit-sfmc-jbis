@@ -266,20 +266,14 @@ export default {
     },
 
     mounted: function () {
-        this.getDatasets();
-
         this.connection = new Postmonger.Session();
         
         this.connection.on("initActivity", this.init);
+        this.connection.on("requestedTokens", (data) => { this.token = data; });
+        this.connection.on("clickedNext", () => { this.saveAndClose(); });
+
+        this.getDatasets();
         this.connection.trigger("ready");
-
-        this.connection.on("requestedTokens", (data) => {
-            this.token = data;
-        });
-
-        this.connection.on("clickedNext", () => {
-            this.saveAndClose();
-        });
     },
 
     components: {
