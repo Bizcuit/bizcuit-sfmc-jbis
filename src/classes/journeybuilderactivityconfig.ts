@@ -7,6 +7,10 @@ export default class JourneyBuilderActivityConfig {
     public identityAttributeName: string = "sfmcContactKey"
     public identityAttributeValue: string = ""
 
+    public isEmpty(){
+        return this.dataset && this.action && this.identityAttributeName && this.identityAttributeValue;
+    }
+
     public static getFromRequest(request: Request): JourneyBuilderActivityConfig {
         const result = new JourneyBuilderActivityConfig()
 

@@ -37,13 +37,15 @@ class ActionsController {
     }
 
     public async execute(req: Request, res: Response) {
-        //Utils.log('EXECUTE', req.body)
-
         const p13n = new InteractionStudio()
         const config = JourneyBuilderActivityConfig.getFromRequest(req)
-        const response = await p13n.callEventApi(config.dataset, p13n.getEventApiPayload(config))
 
-        Utils.log('RESPONSE', response)
+        if(config.isEmpty()){
+            Utils.log("ERROR: Empty request", req.body);
+            return res.end("");
+        }
+
+        const response = await p13n.callEventApi(config.dataset, p13n.getEventApiPayload(config))
 
         return res.status(200).json(response)
     }

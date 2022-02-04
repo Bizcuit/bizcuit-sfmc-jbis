@@ -13,14 +13,20 @@ class UtilsController {
     }
 
     public async test(req: Request, res: Response){
-        Utils.log("test", req.body)
+        
     }
 
 	public async getDatasets(req: Request, res: Response) {
         Utils.log("getDatasets", req.body)
 
-        const p13n = new InteractionStudio()
-		const result = await p13n.callDatasetApi()
+        let result: any = {};
+        const isValidated = await Utils.validateTenant(req.body)
+
+        if(isValidated){
+            const p13n = new InteractionStudio()
+            result = await p13n.callDatasetApi()
+        }
+
         res.json(result)
 	}
 }
