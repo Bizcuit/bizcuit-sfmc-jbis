@@ -8,7 +8,7 @@ export default class JourneyBuilderActivityConfig {
     public identityAttributeValue: string = ""
 
     public isEmpty(){
-        return this.dataset && this.action && this.identityAttributeName && this.identityAttributeValue
+        return !(this.dataset && this.action && this.identityAttributeName && this.identityAttributeValue)
     }
 
     public static getFromRequest(request: Request): JourneyBuilderActivityConfig {
