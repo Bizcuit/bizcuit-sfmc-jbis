@@ -11,7 +11,7 @@ class UtilsController {
 
 	constructor() {
 		this.router.post('/datasets', this.getDatasets)
-		this.router.post('/test', this.getDatasets)
+		this.router.post('/test', this.test)
     }
 
     public async test(req: Request, res: Response){
