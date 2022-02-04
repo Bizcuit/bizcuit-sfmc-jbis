@@ -256,6 +256,7 @@ export default {
                     const getTokenInterval = setInterval(() => {
                         if(this.token){
                             clearInterval(getTokenInterval);
+                            this.log(this.token);
                             resolve(this.token);
                         }
                     }, 100);
