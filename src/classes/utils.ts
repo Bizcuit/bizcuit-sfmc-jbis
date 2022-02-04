@@ -24,7 +24,7 @@ export default class Utils {
             url: endpoint,
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Basic ${token}`
+                "Authorization": `Bearer ${token}`
             }
         }
 
