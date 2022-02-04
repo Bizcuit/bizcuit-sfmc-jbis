@@ -110,7 +110,7 @@ export default {
             this.readActivityOutputArguments(activity);
         },
         
-        getDatasets: function(tokens){
+        getDatasets: function(){
             this.getToken().then(() => {
                 fetch('/utils/datasets', {
                     method: 'POST',
@@ -120,7 +120,7 @@ export default {
                     headers: { 'Content-Type': 'application/json' },
                     redirect: 'follow',
                     referrerPolicy: 'no-referrer',
-                    body: JSON.stringify(tokens)
+                    body: JSON.stringify(this.token)
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -270,6 +270,14 @@ export default {
         
         this.connection.on("initActivity", this.init);
         this.connection.on("requestedTokens", (data) => { this.token = data; });
+        
+        this.connection.on("requestedEndpoints", this.log);
+        this.connection.trigger("requestEndpoints");
+
+        //requestedDataSources
+        //requestedInteraction
+        //registerAllowedOriginResponse
+        
         this.connection.on("clickedNext", () => { this.saveAndClose(); });
 
         this.getDatasets();
