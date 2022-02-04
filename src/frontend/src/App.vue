@@ -146,6 +146,8 @@ export default {
                 redirect: 'follow',
                 referrerPolicy: 'no-referrer',
                 body: JSON.stringify({
+                    token: this.token,
+                    endpoints: this.endpoints,
                     inArguments: [
                         { is_dataset: this.config.is_dataset },
                         { is_action: this.config.is_action },
