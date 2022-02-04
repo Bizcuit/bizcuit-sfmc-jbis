@@ -76,6 +76,8 @@ export default {
         return {
             connection: null,
             activity: null,
+            token: null,
+
             datasets: {},
             outputArguments: [],
 
@@ -108,19 +110,22 @@ export default {
             this.readActivityOutputArguments(activity);
         },
         
-        getDatasets: function(){
-            fetch('/utils/datasets', {
-                method: 'GET',
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'same-origin',
-                headers: { 'Content-Type': 'application/json' },
-                redirect: 'follow',
-                referrerPolicy: 'no-referrer'
-            })
-            .then(response => response.json())
-            .then(data => {
-                this.datasets = data;
+        getDatasets: function(tokens){
+            this.getToken().then(() => {
+                fetch('/utils/datasets', {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/json' },
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    body: JSON.stringify(tokens)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    this.datasets = data;
+                });
             });
         },
 
@@ -199,9 +204,8 @@ export default {
 
             this.setArgumentValues();
             this.activity.metaData.isConfigured = true;
+            
             this.connection.trigger("updateActivity", this.activity);
-
-            console.log("ACTIVITY: \n" + JSON.stringify(this.activity, null, 2));
             this.connection.trigger("requestInspectorClose");
         },
 
@@ -233,24 +237,32 @@ export default {
             }
         },
 
-        toggleCurrentTab: function (offset) {
-            this.ui.currentTabIndex += offset;
-            
-            if(this.ui.currentTabIndex < 0) {
-                this.ui.currentTabIndex = 0;
-            }
-
-            if(this.ui.currentTabIndex >= this.ui.steps.length){
-                this.saveAndClose();
-                return;
-            }
-
-            this.ui.currentTab = this.ui.steps[this.ui.currentTabIndex].key;
-        },
-
         log: function (data) {
             console.log("LOG", JSON.stringify(data, null, 2));
         },
+
+        getToken: function(){
+            return new Promise((resolve, reject) => {
+                const now = new Date().getTime();
+
+                if(this.token && this.token.expires > now){
+                    resolve(this.token);
+                }
+                else{
+                    this.token = null;
+
+                    this.connection.trigger("requestTokens");
+                    
+                    const getTokenInterval = setInterval(() => {
+                        if(this.token){
+                            clearInterval(getTokenInterval);
+                            resolve(this.token);
+                        }
+                    }, 100);
+                }
+            });
+        },
+
     },
 
     mounted: function () {
@@ -261,8 +273,9 @@ export default {
         this.connection.on("initActivity", this.init);
         this.connection.trigger("ready");
 
-        this.connection.on("requestedTokens", this.log);
-        this.connection.trigger("requestTokens");
+        this.connection.on("requestedTokens", (data) => {
+            this.token = data;
+        });
 
         this.connection.on("clickedNext", () => {
             this.saveAndClose();

@@ -37,15 +37,15 @@ class ActionsController {
     }
 
     public async execute(req: Request, res: Response) {
-        Utils.log('EXECUTE - body', req.body)
+        //Utils.log('EXECUTE', req.body)
 
-        const jbConfig = JourneyBuilderActivityConfig.getFromRequest(req)
-        const is = new InteractionStudio()
-        const isResponse = await is.callEventApi(jbConfig, is.getEventApiPayload(jbConfig))
+        const p13n = new InteractionStudio()
+        const config = JourneyBuilderActivityConfig.getFromRequest(req)
+        const response = await p13n.callEventApi(config.dataset, p13n.getEventApiPayload(config))
 
-        Utils.log('RESPONSE', isResponse)
+        Utils.log('RESPONSE', response)
 
-        return res.status(200).json(isResponse)
+        return res.status(200).json(response)
     }
 }
 

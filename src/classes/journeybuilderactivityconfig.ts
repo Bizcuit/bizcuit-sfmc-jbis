@@ -23,7 +23,7 @@ export default class JourneyBuilderActivityConfig {
             });
         }
         catch(err: any){
-            Utils.log("ERROR: Failed to parse request data", err?.message)
+            Utils.log("ERROR: Failed to parse request data. ", err?.message)
         }
 
         return result

@@ -8,12 +8,19 @@ class UtilsController {
 	public router = express.Router()
 
 	constructor() {
-		this.router.all('/datasets', this.getDatasets)
-	}
+		this.router.post('/datasets', this.getDatasets)
+		this.router.post('/test', this.getDatasets)
+    }
+
+    public async test(req: Request, res: Response){
+        Utils.log("test", req.body)
+    }
 
 	public async getDatasets(req: Request, res: Response) {
-        const is = new InteractionStudio()
-		const result = await is.callDatasetApi()
+        Utils.log("getDatasets", req.body)
+
+        const p13n = new InteractionStudio()
+		const result = await p13n.callDatasetApi()
         res.json(result)
 	}
 }

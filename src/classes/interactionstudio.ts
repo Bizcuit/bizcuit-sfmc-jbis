@@ -44,14 +44,14 @@ export default class InteractionStudio {
         return result
     }
 
-    public async callEventApi(jbConfig: JourneyBuilderActivityConfig, payload: any): Promise<KeyValuePairs> {
+    public async callEventApi(dataset: string, payload: any): Promise<KeyValuePairs> {
         let result = new KeyValuePairs()
 
         result[this.statusPropertyName] = "OK"
 
         const request: AxiosRequestConfig = {
             method: 'POST',
-            url: `${this.apiBaseUrl}/api2/authevent/${jbConfig.dataset}`,
+            url: `${this.apiBaseUrl}/api2/authevent/${dataset}`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Basic ${this.apiToken}`
@@ -92,7 +92,6 @@ export default class InteractionStudio {
         let isCampaignFound = false
 
         eventApiResponseBody?.campaignResponses?.forEach((campaignResponse: any) => {
-            // console.log(JSON.stringify(campaignResponse?.payload?.jbis));
             if(campaignResponse?.payload?.jbis !== undefined){
                 for(const prop of Object.keys(campaignResponse.payload.jbis)){
                     result[prop] = campaignResponse.payload.jbis[prop]
