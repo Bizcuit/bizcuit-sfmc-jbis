@@ -38,6 +38,7 @@ export default class Utils {
         }
         catch(err: any){
             Utils.log("ERROR: Tenant validation failed.", err?.message)
+            Utils.log("ERROR", request)
         }
 
         return false;
