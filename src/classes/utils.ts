@@ -31,14 +31,10 @@ export default class Utils {
         try {
             const response = await axios(request)
 
-            Utils.log("response?.data?.enterprise?.id=" + response?.data?.enterprise?.id, "");
-            Utils.log("process.env.MC_EID" + process.env.MC_EID, "");
-
             return response?.data?.enterprise?.id === process.env.MC_EID
         }
         catch(err: any){
             Utils.log("ERROR: Tenant validation failed.", err?.message)
-            Utils.log("ERROR", request)
         }
 
         return false;

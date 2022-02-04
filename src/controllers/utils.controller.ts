@@ -21,6 +21,8 @@ class UtilsController {
 
         let result: any = {};
         const isValidated = await Utils.validateTenant(req.body)
+        
+        Utils.log("isValidated", isValidated);
 
         if(isValidated){
             const p13n = new InteractionStudio()
