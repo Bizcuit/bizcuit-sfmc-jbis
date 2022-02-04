@@ -17,7 +17,8 @@ const app = new App({
 	],
 	middleWares: [
 		bodyParser.json(),
-		bodyParser.urlencoded({ extended: true })
+		bodyParser.urlencoded({ extended: true }),
+        bodyParser.text()
 	]
 });
 

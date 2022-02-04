@@ -41,6 +41,7 @@ class ActionsController {
         Utils.log('EXECUTE - params', req.params)
         Utils.log('EXECUTE - query', req.query)
 
+        Utils.log('EXECUTE - req?.headers', req?.headers?.["content-type"])
 
         const jbConfig = JourneyBuilderActivityConfig.getFromRequest(req.body)
         const is = new InteractionStudio()
