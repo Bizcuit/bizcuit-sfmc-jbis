@@ -242,7 +242,7 @@ export default {
         },
 
         getToken: function(){
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 const now = new Date().getTime();
 
                 if(this.token && this.token.expires > now){
