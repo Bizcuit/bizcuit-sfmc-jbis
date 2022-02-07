@@ -11,6 +11,7 @@
                         type="select"
                         v-model="config.is_dataset"
                         :options="datasets"
+                        :cssClasses="[datasets ? '' : 'is-loading']"
                     />
                 </div>
 
@@ -78,8 +79,8 @@ export default {
             activity: null,
             token: null,
             endpoints: null,
+            datasets: null,
 
-            datasets: {},
             outputArguments: [],
 
             testData: {},

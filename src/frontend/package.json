@@ -13,18 +13,17 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
-    "core-js": "^3.6.5",
-    "postmonger": "^0.0.16",
-    "sass": "^1.49.4",
-    "vue": "^3.0.0",
     "babel-eslint": "^10.1.0",
+    "core-js": "^3.6.5",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
     "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.2"
-},
-  "devDependencies": {
+    "postmonger": "^0.0.16",
+    "sass": "^1.49.4",
+    "sass-loader": "^8.0.2",
+    "vue": "^3.0.0"
   },
+  "devDependencies": {},
   "eslintConfig": {
     "root": true,
     "env": {
