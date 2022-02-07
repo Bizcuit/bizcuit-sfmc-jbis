@@ -18,12 +18,12 @@ export default class Utils {
 
     public static async validateTenant(data: any){
         const token = data?.token?.fuel2token
-        const endpoint = data?.endpoints?.fuelapiRestHost?.ToString()?.toLowerCase() + "platform/v1/tokenContext"
+        const endpoint = data?.endpoints?.fuelapiRestHost + "platform/v1/tokenContext"
         
         if(!token || !endpoint) return false
 
         try {
-            const endpointUrl = new URL(endpoint)
+            const endpointUrl = new URL(endpoint.toLowerCase())
         
             if(!endpointUrl.hostname.endsWith(".exacttargetapis.com") && !endpointUrl.hostname.endsWith(".marketingcloudapis.com")){
                 return false
