@@ -93,12 +93,20 @@ export default class InteractionStudio {
         let isCampaignFound = false
 
         eventApiResponseBody?.campaignResponses?.forEach((campaignResponse: any) => {
-            if(campaignResponse?.payload?.jbis !== undefined){
+            if(campaignResponse?.payload){
+                for(const prop of Object.keys(campaignResponse.payload)){
+                    if(typeof campaignResponse.payload[prop] !== 'object'){
+                        result[prop] = campaignResponse.payload[prop] || ""
+                    }
+                }
+                isCampaignFound = true
+            }
+            /*if(campaignResponse?.payload?.jbis !== undefined){
                 for(const prop of Object.keys(campaignResponse.payload.jbis)){
                     result[prop] = campaignResponse.payload.jbis[prop]
                 }
-                isCampaignFound = true;
-            }
+                isCampaignFound = true
+            }*/
         });
 
         result[this.statusPropertyName] = isCampaignFound ? "OK" : "ERROR: No JBIS campaigns found"
