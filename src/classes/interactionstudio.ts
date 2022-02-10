@@ -101,15 +101,9 @@ export default class InteractionStudio {
                 }
                 isCampaignFound = true
             }
-            /*if(campaignResponse?.payload?.jbis !== undefined){
-                for(const prop of Object.keys(campaignResponse.payload.jbis)){
-                    result[prop] = campaignResponse.payload.jbis[prop]
-                }
-                isCampaignFound = true
-            }*/
         });
 
-        result[this.statusPropertyName] = isCampaignFound ? "OK" : "ERROR: No JBIS campaigns found"
+        result[this.statusPropertyName] = isCampaignFound ? "OK" : "ERROR: No campaigns found"
 
         return result;
     }
