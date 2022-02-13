@@ -14,9 +14,11 @@ export default class InteractionStudio {
     private statusPropertyName: string = "__status"
 
     constructor() {
-        this.apiBaseUrl = process.env.IS_API_BASEURL       || "https://bizcuit.requestcatcher.com"
-        this.apiKey = process.env.IS_API_KEY               || "__IS_API_KEY"
-        this.apiSecret = process.env.IS_API_SECRET         || "__IS_API_SECRET"
+        this.apiBaseUrl = process.env.IS_API_BASEURL?.trim() || ""
+        this.apiKey = process.env.IS_API_KEY?.trim() || ""
+        this.apiSecret = process.env.IS_API_SECRET?.trim() || ""
+
+        if(!this.apiBaseUrl.endsWith("/")) this.apiBaseUrl += "/"
 
         this.apiToken = Buffer.from(this.apiKey + ":" + this.apiSecret, "utf8").toString("base64")
     }
@@ -26,7 +28,7 @@ export default class InteractionStudio {
 
         const request: AxiosRequestConfig = {
             method: 'GET',
-            url: `${this.apiBaseUrl}/internal/datasetSummaries`,
+            url: `${this.apiBaseUrl}internal/datasetSummaries`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Basic ${this.apiToken}`
@@ -51,7 +53,7 @@ export default class InteractionStudio {
 
             const request: AxiosRequestConfig = {
                 method: 'POST',
-                url: `${this.apiBaseUrl}/api2/authevent/${dataset}`,
+                url: `${this.apiBaseUrl}api2/authevent/${dataset}`,
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Basic ${this.apiToken}`

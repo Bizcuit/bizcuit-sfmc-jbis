@@ -1,4 +1,16 @@
-# JBIS: Marketing Cloud Journey Builder activity for Interaction Studio
+# JBIS 2.0: Marketing Cloud Journey Builder activity for Interaction Studio
+
+Documentation below covers v2.0 of the JBIS activity. This version includes a lot of great improvements, such as:
+* Support of Multiple Identities
+* Improved Security:
+  * Interaction Studio API token is now configured on the backend and is never exposed to the UI
+  * All Event API calls from Journey Builder to Interaction Studio are now signed and validated by JBIS 
+  * All internal API calls are also validated
+* Simpler Activity configuration
+  * Dataset is selected with the dropdown list
+  * Only 4 paramers have to be configured: Dataset, Action Name, Identity Attribute and its value
+  * Easy Activity Test UI with output arguments visualization
+* Flexible Server-Side Campaign tempate and Activity output arguments. All selected attributes will become available to the Down Stream activities in your Journey 
 
 ## Installation
 
@@ -15,11 +27,12 @@ JBIS is a Custom Journey Builder activity that allows to send Interaction Studio
 In a nutshell, this activity allows you to receive segment membership and recommendations (and other information) from IS and use this information in your Journey. For example for smart real-time decision splits or anything else.
 
 The following profile information is sent back to MC:
-* List of segments
-* List of recommendations (based on any recipe)
-* Up to three user attributes
+* User attributes
+* User segments
+* Recommendations (based on any recipe)
 * User Group (values could be either “Control” or “Default” for IS A/B tests)
 * Experience
+* And anything else that can be returned by a Server-Side campaign
 
 ![Journey sample image](public/img/opener.png)
 
@@ -38,58 +51,34 @@ JBIS allows to receive real-time information about a customer from Interaction S
 ![Architecture image](public/img/architecture.png)
 
 
+## Setup 
 
-## Interaction Studio setup
-
-### Dataset configuration
-
-* Go to Dataset “Settings” → “General Setup”
-* Open “Advanced Settings” section
-* Set the value of the “Select the Identity attribute to use as the Server Side events Identity” parameter (value depends on the use-case)
-
-![Dataset Setup](public/img/dataset_1.jpg)
-
-![Identity Resolution](public/img/dataset_2.jpg)
-
-### “Server Side Campaign” configuration
-
-* Create a new "Server-Side Template" (Left panel -> Server-Side -> Server Side Templates -> New Template)
-* Use the following code for the template and save it: [JBIS_Template](https://raw.githubusercontent.com/Bizcuit/bizcuit-sfmc-jbis/master/server-side-campaign/ssc-template.txt)
-* Create a new "Server-Side Campaign" (Left panel -> Server-Side -> Server-Side Campaigns -> New Campaign)
-* Configure your campaign using JBIS_Tempate for all experiences and publish your Server-Side campaign
-
-![Server-Side Campaign](public/img/ss_campaign_v2.jpg)
-
-### Optional setup
-
-Optionally configure different experiences and campaign targeting in the setup section of the Server-Side campaign
-
-### Save and publish your Server-Side campaign
-
-
-
-
-
-## Marketing Cloud Setup
-
-### Installed package
-
-* Open MC Setup section
-* Go to Installed packages
-* Create new Package and call it JBIS
-* Add a new Component
-* Select “Journey Builder Activity”
-* Click “Next”
+To set up an activity on your Marketing Account you'll have to complete the following steps:
+* In Interaction Studio: 
+  * Create a new Server-Side Campaign tempate. Use [this code](https://raw.githubusercontent.com/Bizcuit/bizcuit-sfmc-jbis/master/server-side-campaign/ssc-template.v2.txt) for the template
+  * Create a new Server-Side Campaign using this template, configure and publish it. Optionally configure Campaign Targeting for the campaign to be returned only in case a specific Action is sent
+  * Create a new API Token and save your API Key ID and API Key Secret
+* In Marketing Cloud: 
+  * Create a new Package and save yout JWT Secret Key from the Package setup screen
+  * Locate and save your Marketing Cloud EID (Enterprise Business Unit ID - ID of your parent Business Unit)
+* Deploy and Start JBIS application in your private or public cloud environment. You can easily do it with one click using [heroku deployment](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FBizcuit%2Fbizcuit-sfmc-jbis%2Ftree%2Fmaster), but you can also use any other hosting provider.
+* Configure five environment variable for your application:
+  * IS_API_BASEURL - your Interaction Studio Base URL. For example: https://<companyname>.us-1.evergage.com or https://<companyname>.germany-2.evergage.com. You can find it in the URL by navigating to Gears > Gears and viewing the URL in the address bar of your browser
+  * IS_API_KEY - your Interaction Studio API Key ID
+  * IS_API_SECRET - your Interaction Studio API Key Secret
+  * MC_EID - your Marketing Cloud EID
+  * MC_JWT_SECRET - your Marketing Cloud Package JWT Secret Key
+* In Marketing Cloud: 
+  * Add a new Component to your Package
+  * Select “Journey Builder Activity”, Click “Next”
+  * Set JBIS as a name
+  * Use “Custom” as a category
+  * Use the URL of your deloyed application as the “Endpoint URL”. EG: https://my-test-jbis-activity.herokuapp.com
+  * Grant access to all BUs
+  * Save everything and go to Journey Builder
 
 ![MC Package](public/img/mc_package_1.png)
 ![MC Package](public/img/mc_package_2.png)
-
-* Set JBIS as a name
-* Use “Custom” as a category
-* Use the URL of your deloyed application as the “Endpoint URL”. EG: https://my-test-jbis-activity.herokuapp.com
-* Grant access to all BUs
-* Save everything and go to Journey Builder
-
 ![MC Package](public/img/mc_package_3.png)
 
 
@@ -99,22 +88,11 @@ Optionally configure different experiences and campaign targeting in the setup s
 * Add a JBIS custom activity to the journey canvas 
 * JBIS should be located under the “Customer Updates” section
 * Open activity and configure it as described below
-
-* *Account and region* - a subdomain of your IS account. If your IS account is connected to your MC instance, the easiest way to get this value is to open “Feeds Dashboard” from the "Feeds" section of the main menu. Open feeds dashboard, it will be opened in a new window. Check the URL in your browser. The value that you need goes *_before_* ".evergage.com". It can include a location suffix (sagadzhanov123456.germany-2) or not (interactionstudio)
-    Examples: 
-    * *_interactionstudio_*.evergage.com
-    * *_sagadzhanov123456.germany-2_*.evergage.com
-* *Dataset* - the name of your target dataset
-* *UserID field* - which MC attribute will be to as a UserID in IS
-* *IS Action* - which action will be sent to IS
-* *IS Campaign* - the name of the Server-Side campaign created in IS
-* *Authentication Config* - new datasets require all API calls to be Authenticated. If you see a 401 error message when sending a test Event, then your dataset only accepts authenticated API calls and you’ll have to follow instructions below: 
-    * Create an API Token (https://doc.evergage.com/display/EKB/API+Tokens)
-    * Use the following string in the Authentication Config field:
-    
-        {YOUR_API_KEY_ID}:{YOUR_API_KEY_SECRET}
-        
-        EG: aaa-aaa-aaa:abcd
+  * *Dataset* - IS dataset
+  * *IS Action* - which action will be sent to IS
+  * *IS Identity Attribute* - the name of the IS Identity Attribute. Eg: "sfmcContactKey" or "emailAddress"
+  * *UserID field* - which MC attribute will be sent to IS as a User Identity Attribute Value. Eg:  
+* Click "Validate Activity and update Output Parameters" button to check if your IS Server-Side campaign is working and that correct results are returned back to Journey Builder.
 
 ![Configuration screen](public/img/activity_config.png)
 
