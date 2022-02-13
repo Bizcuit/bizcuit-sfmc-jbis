@@ -62,8 +62,8 @@ To set up an activity on your Marketing Account you'll have to complete the foll
   * Create a new Package and save yout JWT Secret Key from the Package setup screen
   * Locate and save your Marketing Cloud EID (Enterprise Business Unit ID - ID of your parent Business Unit)
 * Deploy and Start JBIS application in your private or public cloud environment. You can easily do it with one click using [heroku deployment](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FBizcuit%2Fbizcuit-sfmc-jbis%2Ftree%2Fmaster), but you can also use any other hosting provider.
-* Configure five environment variable for your application:
-  * IS_API_BASEURL - your Interaction Studio Base URL. For example: https://<companyname>.us-1.evergage.com or https://<companyname>.germany-2.evergage.com. You can find it in the URL by navigating to Gears > Gears and viewing the URL in the address bar of your browser
+* Configure five environment variable for your application (here is [how it's done in heroku](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard)):
+  * IS_API_BASEURL - your Interaction Studio Base URL. For example: https://{companyname}.us-1.evergage.com or https://{companyname}.germany-2.evergage.com. You can find it in the URL by navigating to Gears > Gears and viewing the URL in the address bar of your browser
   * IS_API_KEY - your Interaction Studio API Key ID
   * IS_API_SECRET - your Interaction Studio API Key Secret
   * MC_EID - your Marketing Cloud EID
