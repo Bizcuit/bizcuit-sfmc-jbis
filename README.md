@@ -59,7 +59,7 @@ To set up an activity on your Marketing Account you'll have to complete the foll
   * Create a new Server-Side Campaign using this template, configure and publish it. Optionally configure Campaign Targeting for the campaign to be returned only in case a specific Action is sent
   * Create a new API Token and save your API Key ID and API Key Secret
 * In Marketing Cloud: 
-  * Create a new Package and save yout JWT Secret Key from the Package setup screen
+  * Create a new Package and save yout JWT Signing Secret from the Package setup screen
   * Locate and save your Marketing Cloud EID (Enterprise Business Unit ID - ID of your parent Business Unit)
 * Deploy and Start JBIS application in your private or public cloud environment. You can easily do it with one click using [heroku deployment](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FBizcuit%2Fbizcuit-sfmc-jbis%2Ftree%2Fmaster), but you can also use any other hosting provider.
 * Configure five environment variable for your application (here is [how it's done in heroku](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard)):
@@ -67,7 +67,7 @@ To set up an activity on your Marketing Account you'll have to complete the foll
   * IS_API_KEY - your Interaction Studio API Key ID
   * IS_API_SECRET - your Interaction Studio API Key Secret
   * MC_EID - your Marketing Cloud EID
-  * MC_JWT_SECRET - your Marketing Cloud Package JWT Secret Key
+  * MC_JWT_SECRET - your Marketing Cloud Package JWT Signing Secret
 * In Marketing Cloud: 
   * Add a new Component to your Package
   * Select “Journey Builder Activity”, Click “Next”
@@ -77,9 +77,10 @@ To set up an activity on your Marketing Account you'll have to complete the foll
   * Grant access to all BUs
   * Save everything and go to Journey Builder
 
-![MC Package](public/img/mc_package_1.png)
-![MC Package](public/img/mc_package_2.png)
-![MC Package](public/img/mc_package_3.png)
+![MC Package 1](public/img/mc_package_1.png)
+![MC Package 2](public/img/mc_jwt_secret.png)
+![MC Package 3](public/img/mc_package_2.png)
+![MC Package 4](public/img/mc_package_3.png)
 
 
 ### Using JBIS custom activity
@@ -92,7 +93,7 @@ To set up an activity on your Marketing Account you'll have to complete the foll
   * *IS Action* - which action will be sent to IS
   * *IS Identity Attribute* - the name of the IS Identity Attribute. Eg: "sfmcContactKey" or "emailAddress"
   * *UserID field* - which MC attribute will be sent to IS as a User Identity Attribute Value. Eg:  
-* Click "Validate Activity and update Output Parameters" button to check if your IS Server-Side campaign is working and that correct results are returned back to Journey Builder.
+* Click "Validate Activity and update Output Parameters" button to check if your IS Server-Side campaign is working, that correct results are returned back to Journey Builder and to update the list of the Activity Output Arguments.
 
 ![Configuration screen](public/img/activity_config.png)
 

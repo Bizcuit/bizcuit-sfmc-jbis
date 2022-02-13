@@ -56,9 +56,14 @@
 
         <div class="is-flex is-flex-wrap-wrap">
             <div class="tile is-6 mb-4" v-for="arg in outputArguments" :key="arg">
-                <span class="tag is-link" v-html="'{{Interaction.' + (activity?.key || '') + '.' + arg + '}}'"></span> 
-                <span class="tag is-white">=</span>
-                <span class="tag is-link is-light">{{testData[arg] || "NO VALUE"}}</span>
+                <p class="mb-2">
+                    <span class="tag is-link" v-html="'{{Interaction.' + (activity?.key || '') + '.' + arg + '}}'"></span> 
+                </p>
+                <p>
+                    <span class="tag is-link is-light">{{arg}}</span>
+                    <span class="tag is-white">=</span>
+                    <span class="tag is-link is-light">{{testData[arg] || "NO VALUE"}}</span>
+                </p>
             </div>
         </div>
 
@@ -306,4 +311,5 @@ input {
     padding: 3px;
     box-sizing: border-box;
 }
+div.tile { display: block; }
 </style>
